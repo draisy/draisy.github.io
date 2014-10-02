@@ -2,12 +2,12 @@
 #      Main Configs       #
 # ----------------------- #
 
-url: http://yoursite.com
-title: My Octopress Blog
-subtitle: A blogging framework for hackers.
-author: Your Name
+url: http://draisy.github.io/
+title: D is for Development
+subtitle: Dee develops
+author: Draisy
 simple_search: https://www.google.com/search
-description:
+description: Follow me for the rest of the alphabet soup.
 
 # Default date format is "ordinal" (resulting in "July 22nd 2007")
 # You can customize the format as defined in
