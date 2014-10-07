@@ -52,7 +52,7 @@ end
 And that's it! At this point, when you run your program from the command line, as soon as your loop evaluates to that line, it will break into the pry console. And now you can enter ```game_data[:team_name]``` directly in the console while your program is running, and see the values it actually contains. Who knows, maybe it's your lucky day and everything contains what you think it should, and there's no nil (or implicit or Fixnum or String or...) conversion errors of any variety whatsoever.
 
 <strong> Bonus ProTip for those of you reading till the end:</strong><br/>
-  Unlike irb, pry doesn't just quit when you type ```exit```. Nope, in the pry console, 'exit' means I'm done evaluating this line of code, please move on. So each time you type 'exit', pry simply moves on to evaluate the next line or expression in code. So how to quit without hiting the ctrl + C multiple times in frustration? You quit with a bang, like so! ```quit!``` 
+  Unlike irb, pry doesn't just quit when you type ```exit```. Nope, in the pry console, 'exit' means I'm done evaluating this line of code, please move on. So each time you type 'exit', pry simply moves on to evaluate the next line or expression in code. So how to quit without hiting the ctrl + C multiple times in frustration? You exit with a bang, like so! ```exit!``` 
 
   <strong>Bonus ProTip #2:</strong><br/>
   When pry sends a long, multiline value to your console, you need to display the entire thing before you can continue. You can do this the long way, by hitting ```enter``` repeatedly as each line shows up, or you can type ```wq```  (for write quit) so the entire value displays at once, and you can continue.
