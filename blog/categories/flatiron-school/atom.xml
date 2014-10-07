@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Flatiron&nbsp;school | D is for Development]]></title>
+  <link href="http://draisy.github.io/blog/categories/flatiron-school/atom.xml" rel="self"/>
+  <link href="http://draisy.github.io/"/>
+  <updated>2014-10-07T02:55:32-04:00</updated>
+  <id>http://draisy.github.io/</id>
+  <author>
+    <name><![CDATA[Draisy]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[I Don't Mean to Pry]]></title>
+    <link href="http://draisy.github.io/blog/2014/10/07/i-dont-mean-to-pry/"/>
+    <updated>2014-10-07T01:59:30-04:00</updated>
+    <id>http://draisy.github.io/blog/2014/10/07/i-dont-mean-to-pry</id>
+    <content type="html"><![CDATA[<p>But really, I do.</p>
+
+<!--more-->
+
+
+<p>Let&rsquo;s be honest Ruby folks, sometimes we just need to pry. I know it doesn&rsquo;t sound
+pretty, but let&rsquo;s face it, how else are we going to know the inner workings of our
+all our nearest and dearest Ruby programs? Don&rsquo;t tell me you&rsquo;re not DYING to know
+exactly why that pesky bug is keeping all your tests from passing. Oh, and don&rsquo;t get me started on those tests right now&hellip;back to pry.</p>
+
+<p>Let&#8217;s pry!</p>
+
+
+
+
+<p>For the purpose of this mini tutorial, I&#8217;m going to assume you have pry installed
+on your machine, but if you don&#8217;t, go ahead and watch this nifty little video <a href="http://vimeo.com/26391171">here</a>, and come right back when you&#8217;re done.</p>
+
+
+
+
+<p>All right. Moving on.</p>
+
+
+
+
+<p>So you&#8217;re working on your nested (or more like nested[nested][more-nested][inner-nested][and-one-more-for-good-measure-nested] )hash method, and try as you might, you&#8217;re getting everything but the values you really need. This is where our good friend pry comes to shine.</p>
+
+
+
+
+<p>Here&#8217;s a snippet of code from our latest Hashketball game. (Super fun game, guys. We should play it more often).</p>
+
+
+<pre><code class="ruby">def player_numbers(team_name)
+  game_hash.each do |team, game_data|
+    if game_data[:team_name] == team_name
+      return game_data[:players].collect do |player|
+        player[:number]
+      end
+    end
+  end
+end
+</code></pre>
+
+<p>It&rsquo;s pry-time! First, make sure you have <code>require 'pry'</code> included in your file. Second,
+put <code>binding.pry</code> somewhere within that loop, to get an inside view of your variables at work. Something like this:
+<code>ruby
+def player_numbers(team_name)
+  game_hash.each do |team, game_data|
+    if game_data[:team_name] == team_name
+      binding.pry #this line - right here
+      return game_data[:players].collect do |player|
+        player[:number]
+      end
+    end
+  end
+end
+</code>
+And that&rsquo;s it! At this point, when you run your program from the command line, as soon as your loop evaluates to that line, it will break into the pry console. And now you can enter <code>game_data[:team_name]</code> directly in the console while your program is running, and see the values it actually contains. Who knows, maybe it&rsquo;s your lucky day and everything contains what you think it should, and there&rsquo;s no nil (or implicit or Fixnum or String or&hellip;) conversion errors of any variety whatsoever.</p>
+
+<p><strong> Bonus ProTip for those of you reading till the end:</strong><br/>
+  Unlike irb, pry doesn&rsquo;t just quit when you type <code>exit</code>. Nope, in the pry console, &lsquo;exit&rsquo; means I&rsquo;m done evaluating this line of code, please move on. So each time you type &lsquo;exit&rsquo;, pry simply moves on to evaluate the next line or expression in code. So how to quit without hiting the ctrl + C multiple times in frustration? You quit with a bang, like so! <code>quit!</code></p>
+
+<p>  <strong>Bonus Protip #2:</strong><br/>
+  When pry sends a long, multiline value to your console, you need to display the entire thing before you can continue. You can do this the long way, by hitting <code>enter</code> repeatedly as each line shows up, or you can type <code>wq</code>  (for write quit) so the entire value displays at once, and you can continue.</p>
+
+<p>  <p> And this is why I love pry. You can&rsquo;t pry pry away from me. Because as it turns out, sometimes it IS ok to pry.</p></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[My First Post on Octopress]]></title>
+    <link href="http://draisy.github.io/blog/2014/10/02/my-first-post-on-octopress/"/>
+    <updated>2014-10-02T11:37:40-04:00</updated>
+    <id>http://draisy.github.io/blog/2014/10/02/my-first-post-on-octopress</id>
+    <content type="html"><![CDATA[<p>&ldquo;Hello, world!&rdquo;</p>
+
+<!--more-->
+
+]]></content>
+  </entry>
+  
+</feed>
