@@ -54,7 +54,7 @@ And that's it! At this point, when you run your program from the command line, a
 <strong> Bonus ProTip for those of you reading till the end:</strong><br/>
   Unlike irb, pry doesn't just quit when you type ```exit```. Nope, in the pry console, 'exit' means I'm done evaluating this line of code, please move on. So each time you type 'exit', pry simply moves on to evaluate the next line or expression in code. So how to quit without hiting the ctrl + C multiple times in frustration? You quit with a bang, like so! ```quit!``` 
 
-  <strong>Bonus Protip #2:</strong><br/>
+  <strong>Bonus ProTip #2:</strong><br/>
   When pry sends a long, multiline value to your console, you need to display the entire thing before you can continue. You can do this the long way, by hitting ```enter``` repeatedly as each line shows up, or you can type ```wq```  (for write quit) so the entire value displays at once, and you can continue.
 
   <p> And this is why I love pry. You can't pry pry away from me. Because as it turns out, sometimes it IS ok to pry.</p> 
