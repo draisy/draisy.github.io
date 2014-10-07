@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Flatiron&nbsp;school | D is for Development]]></title>
   <link href="http://draisy.github.io/blog/categories/flatiron-school/atom.xml" rel="self"/>
   <link href="http://draisy.github.io/"/>
-  <updated>2014-10-07T03:04:23-04:00</updated>
+  <updated>2014-10-07T10:10:52-04:00</updated>
   <id>http://draisy.github.io/</id>
   <author>
     <name><![CDATA[Draisy]]></name>
@@ -80,7 +80,7 @@ end
 And that&rsquo;s it! At this point, when you run your program from the command line, as soon as your loop evaluates to that line, it will break into the pry console. And now you can enter <code>game_data[:team_name]</code> directly in the console while your program is running, and see the values it actually contains. Who knows, maybe it&rsquo;s your lucky day and everything contains what you think it should, and there&rsquo;s no nil (or implicit or Fixnum or String or&hellip;) conversion errors of any variety whatsoever.</p>
 
 <p><strong> Bonus ProTip for those of you reading till the end:</strong><br/>
-  Unlike irb, pry doesn&rsquo;t just quit when you type <code>exit</code>. Nope, in the pry console, &lsquo;exit&rsquo; means I&rsquo;m done evaluating this line of code, please move on. So each time you type &lsquo;exit&rsquo;, pry simply moves on to evaluate the next line or expression in code. So how to quit without hiting the ctrl + C multiple times in frustration? You quit with a bang, like so! <code>quit!</code></p>
+  Unlike irb, pry doesn&rsquo;t just quit when you type <code>exit</code>. Nope, in the pry console, &lsquo;exit&rsquo; means I&rsquo;m done evaluating this line of code, please move on. So each time you type &lsquo;exit&rsquo;, pry simply moves on to evaluate the next line or expression in code. So how to quit without hiting the ctrl + C multiple times in frustration? You exit with a bang, like so! <code>exit!</code></p>
 
 <p>  <strong>Bonus ProTip #2:</strong><br/>
   When pry sends a long, multiline value to your console, you need to display the entire thing before you can continue. You can do this the long way, by hitting <code>enter</code> repeatedly as each line shows up, or you can type <code>wq</code>  (for write quit) so the entire value displays at once, and you can continue.</p>
