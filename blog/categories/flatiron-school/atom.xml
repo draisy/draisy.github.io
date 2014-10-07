@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Flatiron&nbsp;school | D is for Development]]></title>
   <link href="http://draisy.github.io/blog/categories/flatiron-school/atom.xml" rel="self"/>
   <link href="http://draisy.github.io/"/>
-  <updated>2014-10-07T02:55:32-04:00</updated>
+  <updated>2014-10-07T03:04:23-04:00</updated>
   <id>http://draisy.github.io/</id>
   <author>
     <name><![CDATA[Draisy]]></name>
@@ -82,7 +82,7 @@ And that&rsquo;s it! At this point, when you run your program from the command l
 <p><strong> Bonus ProTip for those of you reading till the end:</strong><br/>
   Unlike irb, pry doesn&rsquo;t just quit when you type <code>exit</code>. Nope, in the pry console, &lsquo;exit&rsquo; means I&rsquo;m done evaluating this line of code, please move on. So each time you type &lsquo;exit&rsquo;, pry simply moves on to evaluate the next line or expression in code. So how to quit without hiting the ctrl + C multiple times in frustration? You quit with a bang, like so! <code>quit!</code></p>
 
-<p>  <strong>Bonus Protip #2:</strong><br/>
+<p>  <strong>Bonus ProTip #2:</strong><br/>
   When pry sends a long, multiline value to your console, you need to display the entire thing before you can continue. You can do this the long way, by hitting <code>enter</code> repeatedly as each line shows up, or you can type <code>wq</code>  (for write quit) so the entire value displays at once, and you can continue.</p>
 
 <p>  <p> And this is why I love pry. You can&rsquo;t pry pry away from me. Because as it turns out, sometimes it IS ok to pry.</p></p>
