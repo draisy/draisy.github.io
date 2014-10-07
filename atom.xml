@@ -4,7 +4,7 @@
   <title><![CDATA[D is for Development]]></title>
   <link href="http://draisy.github.io/atom.xml" rel="self"/>
   <link href="http://draisy.github.io/"/>
-  <updated>2014-10-07T01:30:10-04:00</updated>
+  <updated>2014-10-07T01:35:17-04:00</updated>
   <id>http://draisy.github.io/</id>
   <author>
     <name><![CDATA[Draisy]]></name>
@@ -18,7 +18,8 @@
     <link href="http://draisy.github.io/blog/2014/10/02/my-first-post-on-octopress/"/>
     <updated>2014-10-02T00:00:00-04:00</updated>
     <id>http://draisy.github.io/blog/2014/10/02/my-first-post-on-octopress</id>
-    <content type="html"><![CDATA[
+    <content type="html"><![CDATA[<!--more-->
+
 ]]></content>
   </entry>
   
