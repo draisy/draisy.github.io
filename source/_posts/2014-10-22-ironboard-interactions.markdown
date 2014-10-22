@@ -5,7 +5,7 @@ date: 2014-10-22 02:20:32 -0400
 comments: true
 categories: Flatiron&nbsp;School
 ---
-In which we iron out our ironboard...
+In which we iron out our ironboard.
 <!--more-->
 
 <p>So, it's just another Monday here at Flatiron, and we're all just minding our own code and doing our little keyboard dances, when suddenly the internet goes down (again!) and we're left bereft. </p>
