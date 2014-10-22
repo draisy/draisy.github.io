@@ -16,7 +16,7 @@ In which we iron out our ironboard...
 
 <p>When you run my <a href="https://github.com/draisy/ironboard" target="_blank">script</a> from your command line, it will connect you to ironboard via your terminal, and will automate your interactions with the ironboard application. It allow you to log in with the proper credentials and protections, and will click through the appropriate categories to find the relevant labs and todos. It will scrape today's (or the most recent) schedule, and offer you a choice of all available labs. The lab you select will open directly in github, so you can fork and clone, and get right off the net so other people now have a chance to share in our most precious commodity.</p>
 
-<p>Here's a screenshot of the most recent output as of Tuesday night: <img src = "http://i.imgur.com/R6z9wkh.png" alt="program screenshot"></p>
+<p>Here's a screenshot of the most recent output as of Tuesday night: <img src = "http://i.imgur.com/R6z9wkh.png" alt="program screenshot" height="650"></p>
 
 In order to make this happen, I used two ruby gems: 1) <a href="https://github.com/sparklemotion/mechanize" target="_blank">Mechanize</a> and 2) Our good old friend <a href="https://github.com/sparklemotion/nokogiri" target="_blank">Nogokiri</a>. Mechanize is an amazing tool for automating web interactions. Since Mechanize actually uses the nogokiri gem internally, we need to ```gem install nogokiri``` before we ```gem install mechanize```, add require 'mechanize' in our files and be on our merry way.
 
