@@ -12,7 +12,7 @@ In which we iron out our ironboard.
 
 <div style="text-align:center;"><img src ="http://i.imgur.com/NGx8To6.jpg" alt = "sad pug face" height="500"></div>
 
-<p>But wait! Turns out it's not entirely bad because our new router (I think?) can actually still handle 100 of us. <strong>Whoo!</strong> So while I was 'patiently' waiting my own turn, I came up with this idea to smooth things over for us for the next bout of our wifi's mood swings.</p>
+<p>But wait! Turns out it's not entirely bad because our new router (I think?) can actually still handle 100 of us. <strong>Whoo!</strong> So while I was (im)patiently waiting my own turn, I came up with this idea to smooth things over for us for the next bout of our wifi's mood swings.</p>
 
 <p>When you run my <a href="https://github.com/draisy/ironboard" target="_blank">script</a> from your command line, it will connect you to ironboard via your terminal, and will automate your interactions with the ironboard application. It allow you to log in with the proper credentials and protections, and will click through the appropriate categories to find the relevant labs and todos. It will scrape today's (or the most recent) schedule, and offer you a choice of all available labs. The lab you select will open directly in github, so you can fork and clone, and get right off the net so other people now have a chance to share in our most precious commodity.</p>
 
@@ -78,7 +78,7 @@ the results. Amazing, don't you think?
   end
 ```
 
-<p>In these methods, I use mechanize to search through all the links that include 'daily-schedules' in the URL, and select the last one (aka the most recent) to click. Then, I use nogokiri to display the welcome greeting for the day. The display method also uses nogokiri to parse the html table that contains the plan and todos for the day.</p>
+<p>In these methods, I use mechanize to search through all the links that include 'daily-schedules' in the URL, and select the last one (aka the most recent) to click. Then, I use nogokiri to display the welcome greeting for the day. The display_plan method also uses nogokiri to parse the html table that contains the plan and todos for the day.</p>
 
 ```ruby
   def display_labs
@@ -89,7 +89,7 @@ the results. Amazing, don't you think?
     puts "*********************"
   end
 ```
-<p>Guess what display_labs does? It displays labs! Shocker, I know. So again, I use nogokiri to find the labs on the page, but I need to include that if statement, because some schedules display the titles as ```<h1>``` and some use ```<h2>```. Don't ask me why.
+<p>Guess what display_labs does? It displays labs! Shocker, I know. So again, I use nogokiri to find the labs on the page, but I need to include that additional if statement, because some schedules display the titles as ```<h1>``` and some use ```<h2>```. Don't ask me why.
 
 
 ```
