@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Flatiron&nbsp;school | D is for Development]]></title>
   <link href="http://draisy.github.io/blog/categories/flatiron-school/atom.xml" rel="self"/>
   <link href="http://draisy.github.io/"/>
-  <updated>2014-10-07T10:10:52-04:00</updated>
+  <updated>2014-10-22T03:50:24-04:00</updated>
   <id>http://draisy.github.io/</id>
   <author>
     <name><![CDATA[Draisy]]></name>
@@ -12,6 +12,152 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Ironboard Interactions]]></title>
+    <link href="http://draisy.github.io/blog/2014/10/22/ironboard-interactions/"/>
+    <updated>2014-10-22T02:20:32-04:00</updated>
+    <id>http://draisy.github.io/blog/2014/10/22/ironboard-interactions</id>
+    <content type="html"><![CDATA[<p>In which we iron out our ironboard&hellip;</p>
+
+<!--more-->
+
+
+
+
+<p>So, it&#8217;s just another Monday here at Flatiron, and we&#8217;re all just minding our own code and doing our little keyboard dances, when suddenly the internet goes down (again!) and we&#8217;re left bereft. </p>
+
+
+
+
+<div style="text-align:center;"><img src ="http://i.imgur.com/NGx8To6.jpg" alt = "sad pug face" height="500"></div>
+
+
+
+
+<p>But wait! Turns out it&#8217;s not entirely bad because our new router (I think?) can actually still handle 100 of us. <strong>Whoo!</strong> So while I was &#8216;patiently&#8217; waiting my own turn, I came up with this idea to smooth things over for us for the next bout of our wifi&#8217;s mood swings.</p>
+
+
+
+
+<p>When you run my <a href="https://github.com/draisy/ironboard" target="_blank">script</a> from your command line, it will connect you to ironboard via your terminal, and will automate your interactions with the ironboard application. It allow you to log in with the proper credentials and protections, and will click through the appropriate categories to find the relevant labs and todos. It will scrape today&#8217;s (or the most recent) schedule, and offer you a choice of all available labs. The lab you select will open directly in github, so you can fork and clone, and get right off the net so other people now have a chance to share in our most precious commodity.</p>
+
+
+
+
+<p>Here&#8217;s a screenshot of the most recent output as of Tuesday night: <img src = "../images/ironboard_screenshot.png" alt="program screenshot"></p>
+
+
+<p>In order to make this happen, I used two ruby gems: 1) <a href="https://github.com/sparklemotion/mechanize" target="_blank">Mechanize</a> and 2) Our good old friend <a href="https://github.com/sparklemotion/nokogiri" target="_blank">Nogokiri</a>. Mechanize is an amazing tool for automating web interactions. Since Mechanize actually uses the nogokiri gem internally, we need to <code>gem install nogokiri</code> before we <code>gem install mechanize</code>, add require &lsquo;mechanize&rsquo; in our files and be on our merry way.</p>
+
+<p><p>Mechanize is an amazing tool. Here is one quick example:</p>
+
+<pre><code class="ruby">require 'mechanize'
+agent = Mechanize.new
+page = agent.get('http://google.com/')
+google_form = page.form('f')
+google_form.q = 'flatiron school'
+page = agent.submit(google_form)
+pp page
+</code></pre>
+
+<p>That bit of code is creating the mechanize object, fetching the google homepage, grabbing the search form off the page, inserting flatiron school into the search field, submitting the request, and &lsquo;pretty printing&rsquo;
+the results. Amazing, don&rsquo;t you think?</p>
+
+<p><p>And for further examples, here are some snippets of the script I created</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'>  <span class="k">def</span> <span class="nf">initialize</span>
+</span><span class='line'>   <span class="vi">@agent</span> <span class="o">=</span> <span class="no">Mechanize</span><span class="o">.</span><span class="n">new</span>
+</span><span class='line'>   <span class="vi">@page</span> <span class="o">=</span> <span class="vi">@agent</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="o">&amp;</span><span class="n">lsquo</span><span class="p">;</span><span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s2">&quot;http://learn.flatironschool.com&quot;</span><span class="o">&gt;</span><span class="ss">http</span><span class="p">:</span><span class="sr">//</span><span class="n">learn</span><span class="o">.</span><span class="n">flatironschool</span><span class="o">.</span><span class="n">com</span><span class="o">&lt;</span><span class="sr">/a&gt;&amp;rsquo;)</span>
+</span><span class='line'><span class="sr">   login(@page)</span>
+</span><span class='line'><span class="sr">  end&lt;/</span><span class="nb">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nb">p</span><span class="o">&gt;</span>  <span class="k">def</span> <span class="nf">login</span><span class="p">(</span><span class="n">page</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">page</span> <span class="o">=</span> <span class="vi">@agent</span><span class="o">.</span><span class="n">page</span><span class="o">.</span><span class="n">link_with</span><span class="p">(</span><span class="ss">:text</span> <span class="o">=&gt;</span> <span class="o">&amp;</span><span class="n">lsquo</span><span class="p">;</span><span class="no">Login</span><span class="o">&amp;</span><span class="n">rsquo</span><span class="p">;)</span><span class="o">.</span><span class="n">click</span>
+</span><span class='line'>    <span class="n">login</span> <span class="o">=</span> <span class="n">page</span><span class="o">.</span><span class="n">form_with</span><span class="p">(</span><span class="ss">:action</span> <span class="o">=&gt;</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="o">/</span><span class="n">session</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;)</span><span class="o">&lt;</span><span class="sr">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="sr">&lt;pre&gt;&lt;code&gt;username_field = login.field_with(:name =&amp;gt; &quot;login&quot;)</span>
+</span><span class='line'><span class="sr">username = ask(&quot;Please enter your (github) username:  &quot;) { |x| x.echo = true }</span>
+</span><span class='line'><span class="sr">username_field.value = username</span>
+</span><span class='line'>
+</span><span class='line'><span class="sr">password_field = login.field_with(:name =&amp;gt; &quot;password&quot;)</span>
+</span><span class='line'><span class="sr">password = ask(&quot;Enter password:  &quot;) { |x| x.echo = false }</span>
+</span><span class='line'><span class="sr">password_field.value = password</span>
+</span><span class='line'>
+</span><span class='line'><span class="sr">puts &quot;Thank you. Please wait a moment while we download the latest schedule.\n&quot;</span>
+</span><span class='line'><span class="sr">@logged_in = login.submit login.button</span>
+</span><span class='line'><span class="sr">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;</span><span class="sr">/pre&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="sr">&lt;p&gt;  end</span>
+</span></code></pre></td></tr></table></div></figure></p>
+
+<p><p>Upon instantiation of my ironboard class, I create a new mechanize object, fetch the ironboard homepage, and pass the page into my login function. The first line of my login function scans the page for a link that contains the text &lsquo;Login&rsquo;, and calls the click action on it. The second line scans that resulting page and returns the login form we will need to enter our credentials. The <code>link_with</code> and <code>form_with</code> are both mechanize functions that accept a hash parameter that define the critera to search for. I found those critera by inspecting the elements and viewing the source code of the ironboard page from the browser window.</p></p>
+
+<p><p>The function continues to search for the appropriate login and password fields and I used the <a href="https://github.com/JEG2/highline" target ="_blank">highline</a> gem to get the username to hide the password from terminal view. I assign the values to the fields and call the submit function on my form variable. Tada! I now have a @logged_in page from where I can access all the goodies ironboard has to offer.</p></p>
+
+<pre><code class="ruby">  def get_schedule
+    @schedule = @logged_in.links_with(:href =&gt;/daily-schedules/).last.click
+    puts @schedule.search('div#daily-schedule h1').first.text 
+  end
+
+  def display_plan
+    puts "\n******THE PLAN******"
+    @rows = @schedule.search('tbody tr')
+    @rows.each {|row| puts "#{row.text}"}
+  end
+</code></pre>
+
+<p><p>In these methods, I use mechanize to search through all the links that include &lsquo;daily-schedules&rsquo; in the URL, and select the last one (aka the most recent) to click. Then, I use nogokiri to display the welcome greeting for the day. The display method also uses nogokiri to parse the html table that contains the plan and todos for the day.</p></p>
+
+<pre><code class="ruby">  def display_labs
+    @labs_title = @schedule.search('div#daily-schedule h1')[1]
+    @labs_title = @schedule.search('div#daily-schedule h2').first if !@labs_title
+    puts "\n******THE #{@labs_title.text.upcase}******"
+    @labs_title.next_sibling.next.search('li a').each {|l| puts l.text}
+    puts "*********************"
+  end
+</code></pre>
+
+<p><p>Guess what display_labs does? It displays labs! Shocker, I know. So again, I use nogokiri to find the labs on the page, but I need to include that if statement, because some schedules display the titles as <code>&lt;h1&gt;</code> and some use <code>&lt;h2&gt;</code>. Don&rsquo;t ask me why.</p>
+
+<pre><code>  def get_link(input)
+    lesson = @logged_in.links_with(:href =&gt;/lessons/)[input -1].click
+    get_github_page(lesson)
+  end
+
+  def get_github_page(lesson)
+    github = lesson.links_with(:href =&gt; /github.com\/flatiron-school-ironboard/).first.href
+    open "#{github}"
+  end
+</code></pre>
+
+<p><p> And finally, I take my user input and fire back a lesson variable that contains the appropriate link for the user&rsquo;s selection. Initially, I had used nogokiri here too, and created a complicated hash and nested collect methods to find these values, until I smacked myself on the head and returned to my mechanize behaviors. The <code>links_with</code> method simply returns an array of all the results, so I select the first one, and grab the href value. My <code>get_github_page</code> uses the same method to find the github link within the new lesson page, and then sends the command to open it in your browser.</p></p>
+
+<p><p>So there you have it. Ironboard for terminal is now available for all! I still want to flesh this out with some more functionality, but in the meantime, here&rsquo;s the <a href="https://github.com/draisy/ironboard" target="_blank">github link</a> where I welcome any forks and pulls that come my way.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[I Don't Mean to Pry]]></title>
