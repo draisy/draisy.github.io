@@ -87,7 +87,7 @@ in
 
 
 
-<p>But wait! Turns out it&#8217;s not entirely bad because our new router (I think?) can actually still handle 100 of us. <strong>Whoo!</strong> So while I was &#8216;patiently&#8217; waiting my own turn, I came up with this idea to smooth things over for us for the next bout of our wifi&#8217;s mood swings.</p>
+<p>But wait! Turns out it&#8217;s not entirely bad because our new router (I think?) can actually still handle 100 of us. <strong>Whoo!</strong> So while I was (im)patiently waiting my own turn, I came up with this idea to smooth things over for us for the next bout of our wifi&#8217;s mood swings.</p>
 
 
 
@@ -194,7 +194,7 @@ the results. Amazing, don&rsquo;t you think?</p>
 </span><span class='line'>  <span class="k">end</span>
 </span></code></pre></td></tr></table></div></figure></p>
 
-<p><p>In these methods, I use mechanize to search through all the links that include &lsquo;daily-schedules&rsquo; in the URL, and select the last one (aka the most recent) to click. Then, I use nogokiri to display the welcome greeting for the day. The display method also uses nogokiri to parse the html table that contains the plan and todos for the day.</p></p>
+<p><p>In these methods, I use mechanize to search through all the links that include &lsquo;daily-schedules&rsquo; in the URL, and select the last one (aka the most recent) to click. Then, I use nogokiri to display the welcome greeting for the day. The display_plan method also uses nogokiri to parse the html table that contains the plan and todos for the day.</p></p>
 
 <p><figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -211,7 +211,7 @@ the results. Amazing, don&rsquo;t you think?</p>
 </span><span class='line'>    <span class="nb">puts</span> <span class="s2">&quot;*********************&quot;</span>
 </span><span class='line'>  <span class="k">end</span>
 </span></code></pre></td></tr></table></div></figure>
-<p>Guess what display_labs does? It displays labs! Shocker, I know. So again, I use nogokiri to find the labs on the page, but I need to include that if statement, because some schedules display the titles as <code>&lt;h1&gt;</code> and some use <code>&lt;h2&gt;</code>. Don&rsquo;t ask me why.</p>
+<p>Guess what display_labs does? It displays labs! Shocker, I know. So again, I use nogokiri to find the labs on the page, but I need to include that additional if statement, because some schedules display the titles as <code>&lt;h1&gt;</code> and some use <code>&lt;h2&gt;</code>. Don&rsquo;t ask me why.</p>
 
 <p><figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>

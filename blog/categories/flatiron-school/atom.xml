@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Flatiron&nbsp;school | D is for Development]]></title>
   <link href="http://draisy.github.io/blog/categories/flatiron-school/atom.xml" rel="self"/>
   <link href="http://draisy.github.io/"/>
-  <updated>2014-10-22T11:00:18-04:00</updated>
+  <updated>2014-10-22T11:02:51-04:00</updated>
   <id>http://draisy.github.io/</id>
   <author>
     <name><![CDATA[Draisy]]></name>
@@ -35,7 +35,7 @@
 
 
 
-<p>But wait! Turns out it&#8217;s not entirely bad because our new router (I think?) can actually still handle 100 of us. <strong>Whoo!</strong> So while I was &#8216;patiently&#8217; waiting my own turn, I came up with this idea to smooth things over for us for the next bout of our wifi&#8217;s mood swings.</p>
+<p>But wait! Turns out it&#8217;s not entirely bad because our new router (I think?) can actually still handle 100 of us. <strong>Whoo!</strong> So while I was (im)patiently waiting my own turn, I came up with this idea to smooth things over for us for the next bout of our wifi&#8217;s mood swings.</p>
 
 
 
@@ -129,7 +129,7 @@ the results. Amazing, don&rsquo;t you think?</p>
   end
 </code></pre>
 
-<p><p>In these methods, I use mechanize to search through all the links that include &lsquo;daily-schedules&rsquo; in the URL, and select the last one (aka the most recent) to click. Then, I use nogokiri to display the welcome greeting for the day. The display method also uses nogokiri to parse the html table that contains the plan and todos for the day.</p></p>
+<p><p>In these methods, I use mechanize to search through all the links that include &lsquo;daily-schedules&rsquo; in the URL, and select the last one (aka the most recent) to click. Then, I use nogokiri to display the welcome greeting for the day. The display_plan method also uses nogokiri to parse the html table that contains the plan and todos for the day.</p></p>
 
 <pre><code class="ruby">  def display_labs
     @labs_title = @schedule.search('div#daily-schedule h1')[1]
@@ -140,7 +140,7 @@ the results. Amazing, don&rsquo;t you think?</p>
   end
 </code></pre>
 
-<p><p>Guess what display_labs does? It displays labs! Shocker, I know. So again, I use nogokiri to find the labs on the page, but I need to include that if statement, because some schedules display the titles as <code>&lt;h1&gt;</code> and some use <code>&lt;h2&gt;</code>. Don&rsquo;t ask me why.</p>
+<p><p>Guess what display_labs does? It displays labs! Shocker, I know. So again, I use nogokiri to find the labs on the page, but I need to include that additional if statement, because some schedules display the titles as <code>&lt;h1&gt;</code> and some use <code>&lt;h2&gt;</code>. Don&rsquo;t ask me why.</p>
 
 <pre><code>  def get_link(input)
     lesson = @logged_in.links_with(:href =&gt;/lessons/)[input -1].click
