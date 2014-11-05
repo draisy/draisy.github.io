@@ -60,7 +60,7 @@ users = User.where(first_name: “Percy”).order(“last_name ASC”).limit(5).
 would create something like this:
 
 ```sql
-SELECT users.*, articles.* FROM users LEFT JOIN posts on (users.id = posts.user.id) WHERE users.first_name = “Percy”) ORDER BY last_name ASC LIMIT 5;
+SELECT users.*, posts.* FROM users LEFT JOIN posts on (users.id = posts.user.id) WHERE users.first_name = “Percy”) ORDER BY last_name ASC LIMIT 5;
 ```
 
 
