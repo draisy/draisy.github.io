@@ -5,7 +5,7 @@ date: 2014-11-05 02:38:23 -0500
 comments: true
 categories: Flatiron&nbsp;School
 ---
-Say that three times fast
+Say that three times fast!
 <!--more-->
 
 Before I begin to enthuse about the amazingness that is Arel, allow me to make the preliminary introductions. First things first, you meet ActiveRecord, ActiveRecord meet you. Great!
