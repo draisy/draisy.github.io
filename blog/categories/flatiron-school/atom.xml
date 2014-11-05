@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Flatiron&nbsp;school | D is for Development]]></title>
   <link href="http://draisy.github.io/blog/categories/flatiron-school/atom.xml" rel="self"/>
   <link href="http://draisy.github.io/"/>
-  <updated>2014-11-05T04:04:40-05:00</updated>
+  <updated>2014-11-05T04:06:15-05:00</updated>
   <id>http://draisy.github.io/</id>
   <author>
     <name><![CDATA[Draisy]]></name>
@@ -73,7 +73,7 @@ user.save
 
 <p>would create something like this:</p>
 
-<pre><code class="sql">SELECT users.*, articles.* FROM users LEFT JOIN posts on (users.id = posts.user.id) WHERE users.first_name = “Percy”) ORDER BY last_name ASC LIMIT 5;
+<pre><code class="sql">SELECT users.*, posts.* FROM users LEFT JOIN posts on (users.id = posts.user.id) WHERE users.first_name = “Percy”) ORDER BY last_name ASC LIMIT 5;
 </code></pre>
 
 <p>What&rsquo;s happening here? First, with ActiveRecord, we break the query into segments, and chain them together.  As usual, ActiveRecord queries are lazy, and therefore return relations instead of the actual object. After all, there’s no reason to ask the database to run the query until the last minute. What if we don’t end up using it? Or what if we make it more complex? Since each segment of the querying code above returns a relation object, this is where ARel comes in to put the pieces together and write the SQL statement for the entire thing.</p>
