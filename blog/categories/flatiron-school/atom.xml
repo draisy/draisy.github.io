@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Flatiron&nbsp;school | D is for Development]]></title>
   <link href="http://draisy.github.io/blog/categories/flatiron-school/atom.xml" rel="self"/>
   <link href="http://draisy.github.io/"/>
-  <updated>2014-11-05T04:06:15-05:00</updated>
+  <updated>2014-11-05T04:07:06-05:00</updated>
   <id>http://draisy.github.io/</id>
   <author>
     <name><![CDATA[Draisy]]></name>
@@ -99,7 +99,7 @@ user.save
 <p>Consider the case when you force a relation return by a query to execute itself immediately, and then continue running additional queries on each member of the collection. Something like this:</p>
 
 <pre><code class="ruby">User.all.each do |user|
-      puts user.city
+  puts user.city
 end
 </code></pre>
 
