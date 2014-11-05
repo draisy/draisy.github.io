@@ -55,12 +55,12 @@ With the basic ActiveRecord out of the way, let’s move onto the good stuff. Me
 But that’s not all. There’s ALSO this other ARel, short for ActiveRelation, which is almost as amazing. It’s an object oriented expression of relational algebra (basically a set of operations that take 1 or more relations as input and produce one as output) but that's more easily explained as a simple way to generate complex - <span style="font-style: italic">and I mean complex</span> - database queries. Thanks to ARel, we can chain a series of queries together, much like we do for Ruby methods. ARel handles the complex joins and aggregation and creates one efficient SQL for us. For example:
 
 ```ruby
-users = User.where(first_name: “Percy”).order(“last_name ASC”).limit(5).include(:articles_authored)
+users = User.where(first_name: “Percy”).order(“last_name ASC”).limit(5).include(:posts)
 ```
 would create something like this:
 
 ```sql
-SELECT users.*, articles.* FROM users LEFT JOIN articles on (users.id = articles.author.id) WHERE users.first_name = “Percy”) ORDER BY last_name ASC LIMIT 5;
+SELECT users.*, articles.* FROM users LEFT JOIN posts on (users.id = posts.user.id) WHERE users.first_name = “Percy”) ORDER BY last_name ASC LIMIT 5;
 ```
 
 
