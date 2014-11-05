@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Active AREL's Quick Query ActiveRecord Activity"
+title: "Active AREL's Quick Query At ActiveRecord Activity"
 date: 2014-11-05 02:38:23 -0500
 comments: true
 categories: Flatiron&nbsp;School
