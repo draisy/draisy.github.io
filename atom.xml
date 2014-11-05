@@ -4,7 +4,7 @@
   <title><![CDATA[D is for Development]]></title>
   <link href="http://draisy.github.io/atom.xml" rel="self"/>
   <link href="http://draisy.github.io/"/>
-  <updated>2014-11-05T04:07:06-05:00</updated>
+  <updated>2014-11-05T09:56:20-05:00</updated>
   <id>http://draisy.github.io/</id>
   <author>
     <name><![CDATA[Draisy]]></name>
@@ -14,11 +14,11 @@
 
   
   <entry>
-    <title type="html"><![CDATA[AREL's Active Activity in ActiveRecord]]></title>
+    <title type="html"><![CDATA[Active AREL's Quick Query ActiveRecord Activity]]></title>
     <link href="http://draisy.github.io/blog/2014/11/05/arels-active-activity-in-activerecord/"/>
     <updated>2014-11-05T02:38:23-05:00</updated>
     <id>http://draisy.github.io/blog/2014/11/05/arels-active-activity-in-activerecord</id>
-    <content type="html"><![CDATA[<p>All hail Arel!</p>
+    <content type="html"><![CDATA[<p>Say that three times fast</p>
 
 <!--more-->
 
@@ -70,7 +70,7 @@
 
 <p>In this new query, ActiveRecord now knows to fire the update instead of the insert command, because it keeps track of the objects and knows this particular one already exists. There’s no need to do another SQL insert, so it fires update instead and knows which row to modify.</p>
 
-<p>With the basic ActiveRecord out of the way, let’s move onto the good stuff. Meet <a href="http://www.arelenglish.com/">Arel</a>, the seaman, the captain, and motorboat owner Arel. So Arel was a sailing coach somewhere near Toronto, and he can literally tie knots around you. Amazing, really.</p>
+<p>With the basic ActiveRecord querying out of the way, let’s move onto the good stuff. Meet <a href="http://www.arelenglish.com/">Arel</a>, the seaman, the captain, and motorboat owner Arel. So Arel was a sailing coach somewhere near Toronto, and he can literally tie knots around you. Amazing, really.</p>
 
 <div style="text-align:center">
   <img src="http://i.imgur.com/5sk8cnL.jpg">
