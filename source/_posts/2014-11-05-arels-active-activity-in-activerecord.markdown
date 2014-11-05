@@ -14,7 +14,7 @@ Before I begin to enthuse about the amazingness that is Arel, allow me to make t
   <img src="http://i.imgur.com/7SfPSef.gif">
 </div>
 
-ActiveRecord (camelcase) is part of the Ruby on Rails framework, while active record (lowercase) refers to a design pattern for relational databases. In other words, ActiveRecord is the Rails (very!) intelligent implementation of an active record pattern. 
+ActiveRecord (camelcase) is a core part of the Ruby on Rails framework, while active record (lowercase) refers to a design pattern for relational databases. In other words, ActiveRecord is the Rails (very!) intelligent implementation of an active record pattern. 
 
 Thanks to the ActiveRecord design pattern, we can retrieve our database data as objects which in turn, allows us manipulate them with object oriented methods, as opposed to handling just static rows of data. Our ActiveRecord objects also come pre-equipped with CRUD methods to create, read, update and delete data. 
 
