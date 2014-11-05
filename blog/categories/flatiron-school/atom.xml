@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Flatiron&nbsp;school | D is for Development]]></title>
   <link href="http://draisy.github.io/blog/categories/flatiron-school/atom.xml" rel="self"/>
   <link href="http://draisy.github.io/"/>
-  <updated>2014-11-05T03:53:06-05:00</updated>
+  <updated>2014-11-05T04:04:40-05:00</updated>
   <id>http://draisy.github.io/</id>
   <author>
     <name><![CDATA[Draisy]]></name>
@@ -68,12 +68,12 @@ user.save
 
 <p>But that’s not all. There’s ALSO this other ARel, short for ActiveRelation, which is almost as amazing. It’s an object oriented expression of relational algebra (basically a set of operations that take 1 or more relations as input and produce one as output) but that&rsquo;s more easily explained as a simple way to generate complex - <span style="font-style: italic">and I mean complex</span> - database queries. Thanks to ARel, we can chain a series of queries together, much like we do for Ruby methods. ARel handles the complex joins and aggregation and creates one efficient SQL for us. For example:</p>
 
-<pre><code class="ruby">users = User.where(first_name: “Percy”).order(“last_name ASC”).limit(5).include(:articles_authored)
+<pre><code class="ruby">users = User.where(first_name: “Percy”).order(“last_name ASC”).limit(5).include(:posts)
 </code></pre>
 
 <p>would create something like this:</p>
 
-<pre><code class="sql">SELECT users.*, articles.* FROM users LEFT JOIN articles on (users.id = articles.author.id) WHERE users.first_name = “Percy”) ORDER BY last_name ASC LIMIT 5;
+<pre><code class="sql">SELECT users.*, articles.* FROM users LEFT JOIN posts on (users.id = posts.user.id) WHERE users.first_name = “Percy”) ORDER BY last_name ASC LIMIT 5;
 </code></pre>
 
 <p>What&rsquo;s happening here? First, with ActiveRecord, we break the query into segments, and chain them together.  As usual, ActiveRecord queries are lazy, and therefore return relations instead of the actual object. After all, there’s no reason to ask the database to run the query until the last minute. What if we don’t end up using it? Or what if we make it more complex? Since each segment of the querying code above returns a relation object, this is where ARel comes in to put the pieces together and write the SQL statement for the entire thing.</p>
