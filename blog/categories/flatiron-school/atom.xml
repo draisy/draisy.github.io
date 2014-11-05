@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Flatiron&nbsp;school | D is for Development]]></title>
   <link href="http://draisy.github.io/blog/categories/flatiron-school/atom.xml" rel="self"/>
   <link href="http://draisy.github.io/"/>
-  <updated>2014-11-05T10:22:25-05:00</updated>
+  <updated>2014-11-05T10:36:14-05:00</updated>
   <id>http://draisy.github.io/</id>
   <author>
     <name><![CDATA[Draisy]]></name>
@@ -30,7 +30,7 @@
 </div>
 
 
-<p>ActiveRecord (camelcase) is part of the Ruby on Rails framework, while active record (lowercase) refers to a design pattern for relational databases. In other words, ActiveRecord is the Rails (very!) intelligent implementation of an active record pattern.</p>
+<p>ActiveRecord (camelcase) is a core part of the Ruby on Rails framework, while active record (lowercase) refers to a design pattern for relational databases. In other words, ActiveRecord is the Rails (very!) intelligent implementation of an active record pattern.</p>
 
 <p>Thanks to the ActiveRecord design pattern, we can retrieve our database data as objects which in turn, allows us manipulate them with object oriented methods, as opposed to handling just static rows of data. Our ActiveRecord objects also come pre-equipped with CRUD methods to create, read, update and delete data.</p>
 
