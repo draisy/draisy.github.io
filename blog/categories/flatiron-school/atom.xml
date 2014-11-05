@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Flatiron&nbsp;school | D is for Development]]></title>
   <link href="http://draisy.github.io/blog/categories/flatiron-school/atom.xml" rel="self"/>
   <link href="http://draisy.github.io/"/>
-  <updated>2014-10-22T11:02:51-04:00</updated>
+  <updated>2014-11-05T03:53:06-05:00</updated>
   <id>http://draisy.github.io/</id>
   <author>
     <name><![CDATA[Draisy]]></name>
@@ -12,6 +12,139 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[AREL's Active Activity in ActiveRecord]]></title>
+    <link href="http://draisy.github.io/blog/2014/11/05/arels-active-activity-in-activerecord/"/>
+    <updated>2014-11-05T02:38:23-05:00</updated>
+    <id>http://draisy.github.io/blog/2014/11/05/arels-active-activity-in-activerecord</id>
+    <content type="html"><![CDATA[<p>All hail Arel!</p>
+
+<!--more-->
+
+
+<p>Before I begin to enthuse about the amazingness that is Arel, allow me to make the preliminary introductions. First things first, you meet ActiveRecord, ActiveRecord meet you. Great!</p>
+
+<div style="text-align: center">
+  <img src="http://i.imgur.com/7SfPSef.gif">
+</div>
+
+
+<p>ActiveRecord (camelcase) is part of the Ruby on Rails framework, while active record (lowercase) refers to a design pattern for relational databases. In other words, ActiveRecord is the Rails (very!) intelligent implementation of an active record pattern.</p>
+
+<p>Thanks to the ActiveRecord design pattern, we can retrieve our database data as objects which in turn, allows us manipulate them with object oriented methods, as opposed to handling just static rows of data. Our ActiveRecord objects also come pre-equipped with CRUD methods to create, read, update and delete data.</p>
+
+<p>Here’s a quick example:</p>
+
+<pre><code class="ruby">user = User.new
+user.first_name = “Percy”
+user.save
+</code></pre>
+
+<p>This fires</p>
+
+<pre><code class="sql">INSERT INTO users (first_name) VALUES(“Percy”);
+</code></pre>
+
+<p>Much more reasonable, don’t you think? But ActiveRecords smarts go deeper. Say, what if I update his last name and save again?</p>
+
+<pre><code class="ruby">user.last_name = “Weasley”
+user.save
+</code></pre>
+
+<p>This results in the SQL</p>
+
+<pre><code class="sql">UPDATE users SET last_name = “Weasley” WHERE id = user.id;
+</code></pre>
+
+<p>In this new query, ActiveRecord now knows to fire the update instead of the insert command, because it keeps track of the objects and knows this particular one already exists. There’s no need to do another SQL insert, so it fires update instead and knows which row to modify.</p>
+
+<p>With the basic ActiveRecord out of the way, let’s move onto the good stuff. Meet <a href="http://www.arelenglish.com/">Arel</a>, the seaman, the captain, and motorboat owner Arel. So Arel was a sailing coach somewhere near Toronto, and he can literally tie knots around you. Amazing, really.</p>
+
+<div style="text-align:center">
+  <img src="http://i.imgur.com/5sk8cnL.jpg">
+</div>
+
+
+<p>But that’s not all. There’s ALSO this other ARel, short for ActiveRelation, which is almost as amazing. It’s an object oriented expression of relational algebra (basically a set of operations that take 1 or more relations as input and produce one as output) but that&rsquo;s more easily explained as a simple way to generate complex - <span style="font-style: italic">and I mean complex</span> - database queries. Thanks to ARel, we can chain a series of queries together, much like we do for Ruby methods. ARel handles the complex joins and aggregation and creates one efficient SQL for us. For example:</p>
+
+<pre><code class="ruby">users = User.where(first_name: “Percy”).order(“last_name ASC”).limit(5).include(:articles_authored)
+</code></pre>
+
+<p>would create something like this:</p>
+
+<pre><code class="sql">SELECT users.*, articles.* FROM users LEFT JOIN articles on (users.id = articles.author.id) WHERE users.first_name = “Percy”) ORDER BY last_name ASC LIMIT 5;
+</code></pre>
+
+<p>What&rsquo;s happening here? First, with ActiveRecord, we break the query into segments, and chain them together.  As usual, ActiveRecord queries are lazy, and therefore return relations instead of the actual object. After all, there’s no reason to ask the database to run the query until the last minute. What if we don’t end up using it? Or what if we make it more complex? Since each segment of the querying code above returns a relation object, this is where ARel comes in to put the pieces together and write the SQL statement for the entire thing.</p>
+
+<p>To clarify, ARel constructs the queries, and ActiveRecord does everything else. Here’s a view of the hierarchy: <span style="font-size:small">(source: <a href="https://twitter.com/camertron">Cameron Dutro</a>)</span></p>
+
+<div style="text-align: center">
+  <img src="http://i.imgur.com/XWTYQLS.jpg"/>
+</div>
+
+
+<p>In addition, the resulting relations only get executed when it becomes absolutely necessary to know what’s inside them. So, if we pass <code>@users = User.limit(5)</code> from our controller into our view, we are actually only passing the relation. It is only when we call a method on @users (i.e. <code>@users.first.last_name</code>), that the query is actually run and the relation gets stored as a real Ruby object. Thus, ARel manages the timing for when queries are executed, and queries don’t execute until we actually need them.</p>
+
+<p>One key thing to remember is that the <code>find</code> or <code>all</code> methods are not as lazy as the other query constructs, and those do return the actual record or array of records from the database. Stick to <code>where</code> so you can maintain the speed and flexibility of our good friend ARel, or conversely, use <code>find</code> or  <code>all</code> when you do want to force a relation to evaluate to the actual object.</p>
+
+<div style="text-align: center">
+  <img src="http://i.imgur.com/gUSRwk5.png" height="300px">
+</div>
+
+
+<p>Following in ActiveRecord&rsquo;s footsteps, we developers should be lazy, too; and in our case, this means querying the database as few times as possible. That translates into figuring out what to look for ahead of time, and building a query to return only that result and only one time. Being lazy is a lot of work!</p>
+
+<p>Consider the case when you force a relation return by a query to execute itself immediately, and then continue running additional queries on each member of the collection. Something like this:</p>
+
+<pre><code class="ruby">User.all.each do |user|
+      puts user.city
+end
+</code></pre>
+
+<p>In this example, you&rsquo;re grabbing the records for all the users, looping through them, and calling an association on each user (assuming user <code>belongs_to :city</code>).</p>
+
+<p>This results in one query to get all the users and another query for each user to find its associated city for a total of N + 1 queries, where N is your total users. So now we have a potentially giant number of queries eagerly waiting to slow our application down. Uh oh.</p>
+
+<p>(Sidenote: Calling a regular attribute like <code>user.first_name</code> would not be an issue - it&rsquo;s only because we need to reach into an association that we&rsquo;re forced to run another query each time.)</p>
+
+<p>Fear not. Rails has a solution for this in the form of &ldquo;eager loading.&rdquo; You can use the <code>include</code> method in my previous example above, which basically tells ActiveRecord to treat that field as an ordinary attribute. When you chain <code>include association</code> to your query clauses, ActiveRecords loads the object with the association into memory at the same time, so you don&rsquo;t have to run addition N queries to retrieve that data in the next round.</p>
+
+<div style="text-align:center">
+  <img src="http://i.imgur.com/me17adx.jpg" height="300px">
+</div>
+
+
+<p>ActiveRecord also has a cool feature called scope, where you can create a custom method chain to tack onto your queries like any normal method. For example, if you want your user to be able to filter blog posts, you could do something like this.</p>
+
+<pre><code class="ruby"># in your post.rb file
+scope :priority, -&gt; { where(:is_priority =&gt; true) }
+
+# in your posts_controller.rb
+...
+...
+def index
+  if params[:priority] == true
+    @posts = Post.priority.all
+  else
+    @posts = Post.all
+  end
+end
+...
+...
+</code></pre>
+
+<p>In this example, instead of having to rewrite a chain of ActiveRecord methods, we use a scope that contains all the logic and makes the code more readable. And since scopes also return relations objects, we can chain multiple scopes together to get the results you want.</p>
+
+<div style="text-align:center">
+  <img src="http://i.imgur.com/CoeT6Qf.jpg">
+</div>
+
+
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Ironboard Interactions]]></title>

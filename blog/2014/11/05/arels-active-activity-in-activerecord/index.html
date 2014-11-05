@@ -1,0 +1,289 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>AREL&#8217;s Active Activity in ActiveRecord - D is for Development</title>
+  <meta name="author" content="Draisy">
+
+  
+  <meta name="description" content="AREL's Active Activity in ActiveRecord written in flatiron&nbsp;school All hail Arel! Before I begin to enthuse about the amazingness that is Arel, &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://draisy.github.io/blog/2014/11/05/arels-active-activity-in-activerecord">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="D is for Development" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  
+
+</head>
+
+  <body>
+    <a href="/" class="home-icon">
+      <img src="/images/home.png"/>
+    </a>
+
+    <article role="article" class="full-single-article">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        <h1>AREL&#8217;s Active Activity in ActiveRecord</h1>
+        <div class="meta">
+          written 
+
+
+
+
+
+
+
+
+  
+
+
+
+<time datetime="2014-11-05T02:38:23-05:00" pubdate data-updated="true"></time>
+          
+
+in
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/flatiron-school/'>flatiron&nbsp;school</a>
+  
+</span>
+
+
+        </div>
+        <p>All hail Arel!</p>
+
+<!--more-->
+
+
+<p>Before I begin to enthuse about the amazingness that is Arel, allow me to make the preliminary introductions. First things first, you meet ActiveRecord, ActiveRecord meet you. Great!</p>
+
+<div style="text-align: center">
+  <img src="http://i.imgur.com/7SfPSef.gif">
+</div>
+
+
+<p>ActiveRecord (camelcase) is part of the Ruby on Rails framework, while active record (lowercase) refers to a design pattern for relational databases. In other words, ActiveRecord is the Rails (very!) intelligent implementation of an active record pattern.</p>
+
+<p>Thanks to the ActiveRecord design pattern, we can retrieve our database data as objects which in turn, allows us manipulate them with object oriented methods, as opposed to handling just static rows of data. Our ActiveRecord objects also come pre-equipped with CRUD methods to create, read, update and delete data.</p>
+
+<p>Here’s a quick example:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">user</span> <span class="o">=</span> <span class="no">User</span><span class="o">.</span><span class="n">new</span>
+</span><span class='line'><span class="n">user</span><span class="o">.</span><span class="n">first_name</span> <span class="o">=</span> <span class="err">“</span><span class="no">Percy</span><span class="err">”</span>
+</span><span class='line'><span class="n">user</span><span class="o">.</span><span class="n">save</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This fires</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='sql'><span class='line'><span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">users</span> <span class="p">(</span><span class="n">first_name</span><span class="p">)</span> <span class="k">VALUES</span><span class="p">(</span><span class="err">“</span><span class="n">Percy</span><span class="err">”</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Much more reasonable, don’t you think? But ActiveRecords smarts go deeper. Say, what if I update his last name and save again?</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">user</span><span class="o">.</span><span class="n">last_name</span> <span class="o">=</span> <span class="err">“</span><span class="no">Weasley</span><span class="err">”</span>
+</span><span class='line'><span class="n">user</span><span class="o">.</span><span class="n">save</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This results in the SQL</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='sql'><span class='line'><span class="k">UPDATE</span> <span class="n">users</span> <span class="k">SET</span> <span class="n">last_name</span> <span class="o">=</span> <span class="err">“</span><span class="n">Weasley</span><span class="err">”</span> <span class="k">WHERE</span> <span class="n">id</span> <span class="o">=</span> <span class="k">user</span><span class="p">.</span><span class="n">id</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>In this new query, ActiveRecord now knows to fire the update instead of the insert command, because it keeps track of the objects and knows this particular one already exists. There’s no need to do another SQL insert, so it fires update instead and knows which row to modify.</p>
+
+<p>With the basic ActiveRecord out of the way, let’s move onto the good stuff. Meet <a href="http://www.arelenglish.com/">Arel</a>, the seaman, the captain, and motorboat owner Arel. So Arel was a sailing coach somewhere near Toronto, and he can literally tie knots around you. Amazing, really.</p>
+
+<div style="text-align:center">
+  <img src="http://i.imgur.com/5sk8cnL.jpg">
+</div>
+
+
+<p>But that’s not all. There’s ALSO this other ARel, short for ActiveRelation, which is almost as amazing. It’s an object oriented expression of relational algebra (basically a set of operations that take 1 or more relations as input and produce one as output) but that&rsquo;s more easily explained as a simple way to generate complex - <span style="font-style: italic">and I mean complex</span> - database queries. Thanks to ARel, we can chain a series of queries together, much like we do for Ruby methods. ARel handles the complex joins and aggregation and creates one efficient SQL for us. For example:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">users</span> <span class="o">=</span> <span class="no">User</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="ss">first_name</span><span class="p">:</span> <span class="err">“</span><span class="no">Percy</span><span class="err">”</span><span class="p">)</span><span class="o">.</span><span class="n">order</span><span class="p">(</span><span class="err">“</span><span class="n">last_name</span> <span class="no">ASC</span><span class="err">”</span><span class="p">)</span><span class="o">.</span><span class="n">limit</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">include</span><span class="p">(</span><span class="ss">:articles_authored</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>would create something like this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='sql'><span class='line'><span class="k">SELECT</span> <span class="n">users</span><span class="p">.</span><span class="o">*</span><span class="p">,</span> <span class="n">articles</span><span class="p">.</span><span class="o">*</span> <span class="k">FROM</span> <span class="n">users</span> <span class="k">LEFT</span> <span class="k">JOIN</span> <span class="n">articles</span> <span class="k">on</span> <span class="p">(</span><span class="n">users</span><span class="p">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">articles</span><span class="p">.</span><span class="n">author</span><span class="p">.</span><span class="n">id</span><span class="p">)</span> <span class="k">WHERE</span> <span class="n">users</span><span class="p">.</span><span class="n">first_name</span> <span class="o">=</span> <span class="err">“</span><span class="n">Percy</span><span class="err">”</span><span class="p">)</span> <span class="k">ORDER</span> <span class="k">BY</span> <span class="n">last_name</span> <span class="k">ASC</span> <span class="k">LIMIT</span> <span class="mi">5</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>What&rsquo;s happening here? First, with ActiveRecord, we break the query into segments, and chain them together.  As usual, ActiveRecord queries are lazy, and therefore return relations instead of the actual object. After all, there’s no reason to ask the database to run the query until the last minute. What if we don’t end up using it? Or what if we make it more complex? Since each segment of the querying code above returns a relation object, this is where ARel comes in to put the pieces together and write the SQL statement for the entire thing.</p>
+
+<p>To clarify, ARel constructs the queries, and ActiveRecord does everything else. Here’s a view of the hierarchy: <span style="font-size:small">(source: <a href="https://twitter.com/camertron">Cameron Dutro</a>)</span></p>
+
+<div style="text-align: center">
+  <img src="http://i.imgur.com/XWTYQLS.jpg"/>
+</div>
+
+
+<p>In addition, the resulting relations only get executed when it becomes absolutely necessary to know what’s inside them. So, if we pass <code>@users = User.limit(5)</code> from our controller into our view, we are actually only passing the relation. It is only when we call a method on @users (i.e. <code>@users.first.last_name</code>), that the query is actually run and the relation gets stored as a real Ruby object. Thus, ARel manages the timing for when queries are executed, and queries don’t execute until we actually need them.</p>
+
+<p>One key thing to remember is that the <code>find</code> or <code>all</code> methods are not as lazy as the other query constructs, and those do return the actual record or array of records from the database. Stick to <code>where</code> so you can maintain the speed and flexibility of our good friend ARel, or conversely, use <code>find</code> or  <code>all</code> when you do want to force a relation to evaluate to the actual object.</p>
+
+<div style="text-align: center">
+  <img src="http://i.imgur.com/gUSRwk5.png" height="300px">
+</div>
+
+
+<p>Following in ActiveRecord&rsquo;s footsteps, we developers should be lazy, too; and in our case, this means querying the database as few times as possible. That translates into figuring out what to look for ahead of time, and building a query to return only that result and only one time. Being lazy is a lot of work!</p>
+
+<p>Consider the case when you force a relation return by a query to execute itself immediately, and then continue running additional queries on each member of the collection. Something like this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">User</span><span class="o">.</span><span class="n">all</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">user</span><span class="o">|</span>
+</span><span class='line'>      <span class="nb">puts</span> <span class="n">user</span><span class="o">.</span><span class="n">city</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>In this example, you&rsquo;re grabbing the records for all the users, looping through them, and calling an association on each user (assuming user <code>belongs_to :city</code>).</p>
+
+<p>This results in one query to get all the users and another query for each user to find its associated city for a total of N + 1 queries, where N is your total users. So now we have a potentially giant number of queries eagerly waiting to slow our application down. Uh oh.</p>
+
+<p>(Sidenote: Calling a regular attribute like <code>user.first_name</code> would not be an issue - it&rsquo;s only because we need to reach into an association that we&rsquo;re forced to run another query each time.)</p>
+
+<p>Fear not. Rails has a solution for this in the form of &ldquo;eager loading.&rdquo; You can use the <code>include</code> method in my previous example above, which basically tells ActiveRecord to treat that field as an ordinary attribute. When you chain <code>include association</code> to your query clauses, ActiveRecords loads the object with the association into memory at the same time, so you don&rsquo;t have to run addition N queries to retrieve that data in the next round.</p>
+
+<div style="text-align:center">
+  <img src="http://i.imgur.com/me17adx.jpg" height="300px">
+</div>
+
+
+<p>ActiveRecord also has a cool feature called scope, where you can create a custom method chain to tack onto your queries like any normal method. For example, if you want your user to be able to filter blog posts, you could do something like this.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1"># in your post.rb file</span>
+</span><span class='line'><span class="n">scope</span> <span class="ss">:priority</span><span class="p">,</span> <span class="o">-&gt;</span> <span class="p">{</span> <span class="n">where</span><span class="p">(</span><span class="ss">:is_priority</span> <span class="o">=&gt;</span> <span class="kp">true</span><span class="p">)</span> <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1"># in your posts_controller.rb</span>
+</span><span class='line'><span class="o">.</span><span class="n">.</span><span class="o">.</span>
+</span><span class='line'><span class="o">.</span><span class="n">.</span><span class="o">.</span>
+</span><span class='line'><span class="k">def</span> <span class="nf">index</span>
+</span><span class='line'>  <span class="k">if</span> <span class="n">params</span><span class="o">[</span><span class="ss">:priority</span><span class="o">]</span> <span class="o">==</span> <span class="kp">true</span>
+</span><span class='line'>    <span class="vi">@posts</span> <span class="o">=</span> <span class="no">Post</span><span class="o">.</span><span class="n">priority</span><span class="o">.</span><span class="n">all</span>
+</span><span class='line'>  <span class="k">else</span>
+</span><span class='line'>    <span class="vi">@posts</span> <span class="o">=</span> <span class="no">Post</span><span class="o">.</span><span class="n">all</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'><span class="o">.</span><span class="n">.</span><span class="o">.</span>
+</span><span class='line'><span class="o">.</span><span class="n">.</span><span class="o">.</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>In this example, instead of having to rewrite a chain of ActiveRecord methods, we use a scope that contains all the logic and makes the code more readable. And since scopes also return relations objects, we can chain multiple scopes together to get the results you want.</p>
+
+<div style="text-align:center">
+  <img src="http://i.imgur.com/CoeT6Qf.jpg">
+</div>
+
+
+
+
+
+        <hr class="divider-short"/>
+
+        
+      </div>
+    </div>
+  </div>
+</article>
+
+<hr class="divider-short"/>
+
+<div class="archive-link">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        
+          <a class="pull-left" href="/blog/2014/10/22/ironboard-interactions/" title="Previous Post: Ironboard Interactions">&laquo; Previous: Ironboard Interactions</a>
+        
+
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+    <footer id="footer" class="her-row">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-1">
+  <a href="/"><h4>Home</h4></a>
+</div>
+
+<div class="col-md-2">
+  <div class="social-icon-list">
+    
+
+    
+
+    
+
+    
+  </div>
+</div>
+
+<div class="pull-right">
+  <h4>Powered by <a href="http://octopress.org/">Octopress</a>. Designed by <a href="http://AdrianArtiles.com">Adrian Artiles</a>.</h4>
+</div>
+
+
+    </div>
+  </div>
+</footer>
+
+    
+  </body>
+</html>
