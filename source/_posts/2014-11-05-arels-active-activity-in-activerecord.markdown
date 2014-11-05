@@ -1,11 +1,11 @@
 ---
 layout: post
-title: "AREL's Active Activity in ActiveRecord"
+title: "Active AREL's Quick Query ActiveRecord Activity"
 date: 2014-11-05 02:38:23 -0500
 comments: true
 categories: Flatiron&nbsp;School
 ---
-All hail Arel!
+Say that three times fast
 <!--more-->
 
 Before I begin to enthuse about the amazingness that is Arel, allow me to make the preliminary introductions. First things first, you meet ActiveRecord, ActiveRecord meet you. Great!
@@ -46,7 +46,7 @@ UPDATE users SET last_name = “Weasley” WHERE id = user.id;
 
 In this new query, ActiveRecord now knows to fire the update instead of the insert command, because it keeps track of the objects and knows this particular one already exists. There’s no need to do another SQL insert, so it fires update instead and knows which row to modify.
 
-With the basic ActiveRecord out of the way, let’s move onto the good stuff. Meet <a href="http://www.arelenglish.com/">Arel</a>, the seaman, the captain, and motorboat owner Arel. So Arel was a sailing coach somewhere near Toronto, and he can literally tie knots around you. Amazing, really.
+With the basic ActiveRecord querying out of the way, let’s move onto the good stuff. Meet <a href="http://www.arelenglish.com/">Arel</a>, the seaman, the captain, and motorboat owner Arel. So Arel was a sailing coach somewhere near Toronto, and he can literally tie knots around you. Amazing, really.
 
 <div style="text-align:center">
   <img src="http://i.imgur.com/5sk8cnL.jpg">
