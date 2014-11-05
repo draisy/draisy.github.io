@@ -86,7 +86,7 @@ Consider the case when you force a relation return by a query to execute itself 
 
 ``` ruby
 User.all.each do |user|
-      puts user.city
+  puts user.city
 end
 ```
 
