@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Flatiron&nbsp;school | D is for Development]]></title>
   <link href="http://draisy.github.io/blog/categories/flatiron-school/atom.xml" rel="self"/>
   <link href="http://draisy.github.io/"/>
-  <updated>2014-11-18T23:51:48-05:00</updated>
+  <updated>2014-11-18T23:53:55-05:00</updated>
   <id>http://draisy.github.io/</id>
   <author>
     <name><![CDATA[Draisy]]></name>
@@ -34,14 +34,9 @@
 
 <p></p>
 
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-
-
-<p></p>
-
 <script> 
 $(function(){
-  $("#includedContent").load("maze.html"); 
+  $("#maze-page").load("maze.html"); 
 });
 </script>
 
