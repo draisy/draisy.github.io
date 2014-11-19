@@ -15,9 +15,8 @@ Here's a demo of my implementation of his script:
 <div id="maze-page"></div> 
 
 
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script> 
 <script> 
 $(function(){
-  $("#includedContent").load("maze.html"); 
+  $("#maze-page").load("maze.html"); 
 });
 </script>
