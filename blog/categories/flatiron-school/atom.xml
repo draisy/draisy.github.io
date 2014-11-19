@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Flatiron&nbsp;school | D is for Development]]></title>
   <link href="http://draisy.github.io/blog/categories/flatiron-school/atom.xml" rel="self"/>
   <link href="http://draisy.github.io/"/>
-  <updated>2014-11-18T23:53:55-05:00</updated>
+  <updated>2014-11-19T01:28:12-05:00</updated>
   <id>http://draisy.github.io/</id>
   <author>
     <name><![CDATA[Draisy]]></name>
@@ -18,27 +18,198 @@
     <link href="http://draisy.github.io/blog/2014/11/18/for-when-you-need-that-special-type-of-easing/"/>
     <updated>2014-11-18T23:05:32-05:00</updated>
     <id>http://draisy.github.io/blog/2014/11/18/for-when-you-need-that-special-type-of-easing</id>
-    <content type="html"><![CDATA[<p>Hat tip to Jimmy for the inspiration behind this fun post.</p>
+    <content type="html"><![CDATA[<p>Hat tip to <a href="https://www.linkedin.com/pub/jimmy-kuruvilla/21/505/972">Jimmy</a> for the inspiration behind this fun post.</p>
 
 <!--more-->
 
 
-<p>Yesterday was an awesome day at Flatiron. First, we got to view an in-depth, behind-the-scenes coverage of the Flatiron precollege program. Then, we were inundated with an exceptionally detailed finance and data analytics talk from the talented Andrew etc from Blackrock. Of course, we also got to meet and chat with John Resig of jQuery and Khan Academy fame - a massive honor. And to top it all off, we were even introduced to the jQuery easing effects, as Jimmy so eloquently remarked &ldquo;for when you need that special type of easing.&rdquo;</p>
+<p>Yesterday was an awesome day at Flatiron. First, we got to view an in-depth, behind-the-scenes coverage of the Flatiron precollege program. Then, we were inundated with an exceptionally detailed finance and data analytics talk by BlackRock&rsquo;s own Andrew Rothstein. Of course, we also got to meet and chat with John Resig of jQuery and Khan Academy fame - a massive honor. And to top it all off, we were even introduced to the jQuery easing effects, as Jimmy so eloquently put it &ldquo;for when you need that special type of easing.&rdquo;</p>
 
-<p>Intrigued by all the easing possibilities, I set out to find a fun application to test the waters. After playing around with basic SVG paths, I bumped into a cool tutorial by <a href="http://dropthebit.com/">Yair Even-Or</a> which basically creates an object that traverses a maze as it animates around a hidden svg path.</p>
+<p>Intrigued by all the easing possibilities, I set out to find a fun application to test the waters. After playing around with basic SVG paths, I bumped into a cool tutorial by <a href="http://dropthebit.com/">Yair Even-Or</a> which basically creates an object that seemingly traverses a maze as it animates around a hidden svg path.</p>
 
 <p>Here&rsquo;s a demo of my implementation of his script:</p>
 
-<div id="maze-page"></div>
+<iframe src="http://mnsny.com/maze/maze.html" name="targetframe" allowTransparency="true" scrolling="no" frameborder="0" width="1200px" height="650px" style="margin-top:-30px" >
+    </iframe>
 
 
-<p></p>
+<p>So what&rsquo;s going on here? With the help of <a href="http://www.mazegenerator.net/">Maze Generator</a>, I created two SVG images: one for the maze, and one for the maze + solution. I then grabbed the polyline point values of the red line within the solution file and converted it to an SVG path. My next step was to create a bunch of DOM elements and call this cool <a href="https://github.com/yairEO/pathAnimator">Path Animator</a> script to move my elements along this new path.</p>
 
-<script> 
-$(function(){
-  $("#maze-page").load("maze.html"); 
-});
-</script>
+<p>Quick overview of Path Animator functionality:
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">path</span> <span class="o">=</span> <span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">M150</span> <span class="mi">0</span> <span class="nx">L75</span> <span class="mi">200</span> <span class="nx">L225</span> <span class="mi">200</span> <span class="nx">Z</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;;</span>
+</span><span class='line'>    <span class="nx">pathAnimator</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">PathAnimator</span><span class="p">(</span> <span class="nx">path</span> <span class="p">),</span>
+</span><span class='line'>    <span class="nx">speed</span> <span class="o">=</span> <span class="mi">6</span><span class="p">,</span>     <span class="o">&lt;</span><span class="nx">br</span><span class="o">/&gt;</span>
+</span><span class='line'>    <span class="nx">reverse</span> <span class="o">=</span> <span class="kc">false</span><span class="p">,</span>
+</span><span class='line'>    <span class="nx">startOffset</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>    <span class="o">&lt;</span><span class="nx">br</span><span class="o">/&gt;</span>
+</span><span class='line'>    <span class="nx">easing</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">t</span><span class="p">){</span> <span class="nx">t</span><span class="o">*</span><span class="p">(</span><span class="mi">2</span><span class="o">-</span><span class="nx">t</span><span class="p">)</span> <span class="p">};</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="nx">pathAnimator</span><span class="p">.</span><span class="nx">start</span><span class="p">(</span> <span class="nx">speed</span><span class="p">,</span> <span class="nx">step</span><span class="p">,</span> <span class="nx">reverse</span><span class="p">,</span> <span class="nx">startOffset</span><span class="p">,</span> <span class="nx">finish</span><span class="p">,</span> <span class="nx">easing</span><span class="p">);</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="kd">function</span> <span class="nx">step</span><span class="p">(</span> <span class="nx">point</span><span class="p">,</span> <span class="nx">angle</span> <span class="p">){</span>
+</span><span class='line'><span class="p">}</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="kd">function</span> <span class="nx">finish</span><span class="p">(){</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></p>
+
+<ul>
+  <li>Create an SVG path</li>
+  <li>Initiate PathAnimator object</li>
+  <li>Set seconds it will take to complete entire path</li>
+  <li>Direction of path</li>
+  <li>From 0-100%, beginning to end</li>
+  <li>Finally, the easing functionality!</li>
+</ul>
+
+
+<p>Then you call start on the instance and it proceeds to the step function. The step function is where the &lsquo;magic&rsquo; actually happens and it contains the action to occur with every &lsquo;frame&rsquo;. In our case, we want to change the point.x, point.y and angle for every move. The finish function then gets called when the animation is done.</p>
+
+<p>Here are some actual snippets from the code of this implementation:
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">path</span> <span class="o">=</span> <span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">M205</span><span class="p">,</span><span class="mf">1.9999999999999822</span> <span class="mi">205</span><span class="p">,</span><span class="mf">15.124355652982123</span> <span class="mi">247</span><span class="p">,</span><span class="mf">41.3730669589464</span> <span class="mi">247</span><span class="p">,</span><span class="mf">15.124355652982123</span> <span class="mi">289</span><span class="p">,</span><span class="mf">41.3730669589464</span> <span class="mi">268</span><span class="p">,</span><span class="mf">54.497422611928542</span> <span class="mi">268</span><span class="p">,</span><span class="mf">80.74613391789282</span> <span class="mi">247</span><span class="p">,</span><span class="mf">67.621778264910674</span> <span class="mi">247</span><span class="p">,</span><span class="mf">93.870489570874966</span> <span class="mi">289</span><span class="p">,</span><span class="mf">120.11920087683923</span> <span class="mi">289</span><span class="p">,</span><span class="mf">67.621778264910674</span> <span class="mi">310</span><span class="p">,</span><span class="mf">54.497422611928542</span> <span class="mi">310</span><span class="p">,</span><span class="mf">28.248711305964264</span> <span class="mi">331</span><span class="p">,</span><span class="mf">41.3730669589464</span> <span class="mi">373</span><span class="p">,</span><span class="mf">15.124355652982123</span> <span class="mi">394</span><span class="p">,</span><span class="mf">28.248711305964264</span> <span class="mi">415</span><span class="p">,</span><span class="mf">15.124355652982123</span> <span class="mi">415</span><span class="p">,</span><span class="mf">67.621778264910674</span> <span class="mi">394</span><span class="p">,</span><span class="mf">80.74613391789282</span> <span class="mi">415</span><span class="p">,</span><span class="mf">93.870489570874966</span> <span class="mi">415</span><span class="p">,</span><span class="mf">198.86533479473209</span> <span class="mi">394</span><span class="p">,</span><span class="mf">185.74097914174996</span> <span class="mi">352</span><span class="p">,</span><span class="mf">211.98969044771422</span> <span class="mi">331</span><span class="p">,</span><span class="mf">198.86533479473209</span> <span class="mi">331</span><span class="p">,</span><span class="mf">172.61662348876783</span> <span class="mi">352</span><span class="p">,</span><span class="mf">185.74097914174996</span> <span class="mi">373</span><span class="p">,</span><span class="mf">172.61662348876783</span> <span class="mi">373</span><span class="p">,</span><span class="mf">146.36791218280354</span> <span class="mi">394</span><span class="p">,</span><span class="mf">159.49226783578567</span> <span class="mi">394</span><span class="p">,</span><span class="mf">106.99484522385711</span> <span class="mi">373</span><span class="p">,</span><span class="mf">93.870489570874966</span> <span class="mi">331</span><span class="p">,</span><span class="mf">120.11920087683923</span> <span class="mi">331</span><span class="p">,</span><span class="mf">146.36791218280354</span> <span class="mi">268</span><span class="p">,</span><span class="mf">185.74097914174996</span> <span class="mi">289</span><span class="p">,</span><span class="mf">198.86533479473209</span> <span class="mi">289</span><span class="p">,</span><span class="mf">225.11404610069639</span> <span class="mi">247</span><span class="p">,</span><span class="mf">251.36275740666068</span> <span class="mi">268</span><span class="p">,</span><span class="mf">264.48711305964281</span> <span class="mi">247</span><span class="p">,</span><span class="mf">277.61146871262491</span> <span class="mi">268</span><span class="p">,</span><span class="mf">290.73582436560707</span> <span class="mi">289</span><span class="p">,</span><span class="mf">277.61146871262491</span> <span class="mi">331</span><span class="p">,</span><span class="mf">303.86018001858918</span> <span class="mi">331</span><span class="p">,</span><span class="mf">251.36275740666068</span> <span class="mi">352</span><span class="p">,</span><span class="mf">238.23840175367852</span> <span class="mi">373</span><span class="p">,</span><span class="mf">251.36275740666068</span> <span class="mi">373</span><span class="p">,</span><span class="mf">330.1088913245535</span> <span class="mi">352</span><span class="p">,</span><span class="mf">343.23324697753566</span> <span class="mi">352</span><span class="p">,</span><span class="mf">369.48195828349992</span> <span class="mi">373</span><span class="p">,</span><span class="mf">382.606313936482</span> <span class="mi">310</span><span class="p">,</span><span class="mf">421.97938089542851</span> <span class="mi">331</span><span class="p">,</span><span class="mf">435.10373654841061</span> <span class="mi">331</span><span class="p">,</span><span class="mf">461.35244785437487</span> <span class="mi">352</span><span class="p">,</span><span class="mf">474.47680350735703</span> <span class="mi">331</span><span class="p">,</span><span class="mf">487.60115916033919</span> <span class="mi">310</span><span class="p">,</span><span class="mf">474.47680350735703</span> <span class="mi">310</span><span class="p">,</span><span class="mf">448.22809220139277</span> <span class="mi">268</span><span class="p">,</span><span class="mf">474.47680350735703</span> <span class="mi">247</span><span class="p">,</span><span class="mf">461.35244785437487</span> <span class="mi">247</span><span class="p">,</span><span class="mf">435.10373654841061</span> <span class="mi">205</span><span class="p">,</span><span class="mf">461.35244785437487</span> <span class="mi">184</span><span class="p">,</span><span class="mf">448.22809220139277</span> <span class="mi">184</span><span class="p">,</span><span class="mf">474.47680350735703</span> <span class="mi">226</span><span class="p">,</span><span class="mf">500.72551481332135</span> <span class="mi">205</span><span class="p">,</span><span class="mf">513.84987046630351</span> <span class="mi">226</span><span class="p">,</span><span class="mf">526.97422611928562</span> <span class="mi">226</span><span class="p">,</span><span class="mf">540.09858177226772</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;;</span> <span class="c1">//super crazy SVG path!</span>
+</span><span class='line'><span class="nx">firstWalkerObj</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;.</span><span class="nx">maze</span> <span class="o">&gt;</span> <span class="p">.</span><span class="nx">walker</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;)[</span><span class="mi">0</span><span class="p">],</span>
+</span><span class='line'><span class="nx">walkers</span> <span class="o">=</span> <span class="p">[];</span>
+</span><span class='line'> <span class="o">&amp;</span><span class="nx">hellip</span><span class="p">;</span>
+</span><span class='line'> <span class="o">&amp;</span><span class="nx">hellip</span><span class="p">;</span>
+</span><span class='line'>   <span class="nx">step</span> <span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">point</span><span class="p">,</span> <span class="nx">angle</span><span class="p">){</span>
+</span><span class='line'>    <span class="k">this</span><span class="p">.</span><span class="nx">walker</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">cssText</span> <span class="o">=</span> <span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">top</span><span class="o">:&amp;</span><span class="nx">rdquo</span><span class="p">;</span> <span class="o">+</span> <span class="nx">point</span><span class="p">.</span><span class="nx">y</span> <span class="o">+</span> <span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">px</span><span class="p">;</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;</span> <span class="o">+</span>
+</span><span class='line'>                  <span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">left</span><span class="o">:&amp;</span><span class="nx">rdquo</span><span class="p">;</span> <span class="o">+</span> <span class="nx">point</span><span class="p">.</span><span class="nx">x</span> <span class="o">+</span> <span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">px</span><span class="p">;</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;</span> <span class="o">+</span>
+</span><span class='line'>                  <span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">transform</span><span class="o">:</span><span class="nx">rotate</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;</span> <span class="o">+</span> <span class="nx">angle</span> <span class="o">+</span> <span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">deg</span><span class="p">);</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;</span> <span class="o">+</span>
+</span><span class='line'>                  <span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="o">-</span><span class="nx">webkit</span><span class="o">-</span><span class="nx">transform</span><span class="o">:</span><span class="nx">rotate</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;</span> <span class="o">+</span>  <span class="nx">angle</span> <span class="o">+</span> <span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">deg</span><span class="p">);</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;</span> <span class="o">+</span>
+</span><span class='line'>                  <span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">color</span><span class="o">:&amp;</span><span class="nx">rdquo</span><span class="p">;</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">color</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">},</span> <span class="o">&lt;</span><span class="nx">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="o">&amp;</span><span class="nx">hellip</span><span class="p">;</span>
+</span><span class='line'><span class="o">&amp;</span><span class="nx">hellip</span><span class="p">;</span>
+</span><span class='line'>   <span class="nx">finish</span> <span class="o">:</span> <span class="kd">function</span><span class="p">(){</span> <span class="c1">//restarts maze when it&amp;rsquo;s done</span>
+</span><span class='line'>      <span class="k">this</span><span class="p">.</span><span class="nx">start</span><span class="p">();</span>
+</span><span class='line'>    <span class="p">},</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">pre</span><span class="o">&gt;&lt;</span><span class="nx">code</span><span class="o">&gt;</span><span class="nx">Just</span> <span class="k">for</span> <span class="nx">fun</span><span class="p">,</span> <span class="nx">here</span><span class="s1">&#39;s the overview for the methods needed for all the controller functionality:</span>
+</span><span class='line'><span class="s1">&lt;/code&gt;&lt;/pre&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="s1">&lt;p&gt;  $(&amp;lsquo;#showPath&amp;rsquo;).on(&amp;lsquo;change&amp;rsquo;, togglePath);</span>
+</span><span class='line'><span class="s1">  $(&amp;lsquo;#addWalker&amp;rsquo;).on(&amp;lsquo;click&amp;rsquo;, addWalker);</span>
+</span><span class='line'><span class="s1">  $(&amp;lsquo;menu&amp;rsquo;)</span>
+</span><span class='line'><span class="s1">    .on(&amp;lsquo;click&amp;rsquo;, &amp;lsquo;.delete&amp;rsquo;, removeInstance)</span>
+</span><span class='line'><span class="s1">    .on(&amp;lsquo;click&amp;rsquo;, &amp;lsquo;.stopPlay&amp;rsquo;, stopPlay)</span>
+</span><span class='line'><span class="s1">    .on(&amp;lsquo;click&amp;rsquo;, &amp;lsquo;.reverse&amp;rsquo;, switchDirection)</span>
+</span><span class='line'><span class="s1">    .on(&amp;lsquo;change&amp;rsquo;, &amp;lsquo;.speed&amp;rsquo;, changeSpeed)</span>
+</span><span class='line'><span class="s1">    .on(&amp;lsquo;change&amp;rsquo;, &amp;lsquo;select&amp;rsquo;, changeEasing);&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="s1">&lt;p&gt;  $(&amp;lsquo;.speed&amp;rsquo;).trigger(&amp;lsquo;change&amp;rsquo;);</span>
+</span><span class='line'><span class="s1">&lt;code&gt;</span>
+</span><span class='line'><span class="s1">And to bring this full circle, here&#39;</span><span class="nx">s</span> <span class="nx">how</span> <span class="nx">the</span> <span class="nx">special</span> <span class="nx">type</span> <span class="nx">of</span> <span class="nx">easing</span> <span class="nx">is</span> <span class="nx">happening</span><span class="o">:</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/code&gt;javascript</span>
+</span><span class='line'>  <span class="kd">function</span> <span class="nx">changeEasing</span><span class="p">(){</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">thisAnimatedWalker</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">parentNode</span><span class="p">).</span><span class="nx">data</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="nx">walker</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;),</span>
+</span><span class='line'>      <span class="nx">easingFunc</span> <span class="o">=</span> <span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;;</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">pre</span><span class="o">&gt;&lt;</span><span class="nx">code</span><span class="o">&gt;</span><span class="k">if</span><span class="p">(</span> <span class="k">this</span><span class="p">.</span><span class="nx">value</span> <span class="p">){</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">formula</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">value</span><span class="p">;</span>
+</span><span class='line'>  <span class="nx">easingFunc</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">t</span><span class="p">){</span> <span class="k">return</span> <span class="nb">eval</span><span class="p">(</span><span class="nx">formula</span><span class="p">)</span> <span class="p">};</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">thisAnimatedWalker</span><span class="p">.</span><span class="nx">easing</span> <span class="o">=</span> <span class="nx">easingFunc</span><span class="p">;</span>
+</span><span class='line'><span class="nx">thisAnimatedWalker</span><span class="p">.</span><span class="nx">resume</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="nx">thisAnimatedWalker</span><span class="p">);</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/code&gt;&lt;/pre&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span>  <span class="p">}</span>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">code</span><span class="o">&gt;</span>
+</span><span class='line'><span class="nx">The</span> <span class="nx">functionality</span> <span class="nx">is</span> <span class="nx">contained</span> <span class="nx">within</span> <span class="nx">the</span> <span class="nx">select</span> <span class="nx">box</span> <span class="nx">on</span> <span class="nx">the</span> <span class="nx">html</span> <span class="nx">page</span><span class="p">,</span> <span class="k">in</span> <span class="nx">the</span> <span class="nx">value</span> <span class="nx">attribute</span> <span class="k">for</span> <span class="nx">each</span> <span class="nx">option</span><span class="p">.</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/code&gt;html</span>
+</span><span class='line'> <span class="o">&lt;</span><span class="nx">select</span><span class="o">&gt;</span>
+</span><span class='line'>    <span class="o">&lt;</span><span class="nx">option</span> <span class="nx">value</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="o">&gt;</span><span class="nx">No</span> <span class="nx">Easing</span><span class="o">&lt;</span><span class="err">/option&gt;</span>
+</span><span class='line'>    <span class="o">&lt;</span><span class="nx">option</span> <span class="nx">value</span><span class="o">=</span><span class="s1">&#39;Math.pow(t,3)&#39;</span><span class="o">&gt;</span><span class="nx">easeInCubic</span><span class="o">&lt;</span><span class="err">/option&gt;</span>
+</span><span class='line'>    <span class="o">&lt;</span><span class="nx">option</span> <span class="nx">value</span><span class="o">=</span><span class="s1">&#39;1-Math.pow(1-t,3)&#39;</span><span class="o">&gt;</span><span class="nx">easeOutCubic</span><span class="o">&lt;</span><span class="err">/option&gt;</span>
+</span><span class='line'>    <span class="o">&lt;</span><span class="nx">option</span> <span class="nx">value</span><span class="o">=</span><span class="s1">&#39;Math.pow(2,-10*t) * Math.sin((t-2/4)*(2*Math.PI)/2) + 1&#39;</span><span class="o">&gt;</span><span class="nx">easeOutElastic</span><span class="o">&lt;</span><span class="err">/option&gt;</span>
+</span><span class='line'>    <span class="o">&lt;</span><span class="nx">option</span> <span class="nx">value</span><span class="o">=</span><span class="s1">&#39;t*t&#39;</span><span class="o">&gt;</span><span class="nx">easeInQuad</span><span class="o">&lt;</span><span class="err">/option&gt;</span>
+</span><span class='line'>    <span class="o">&lt;</span><span class="nx">option</span> <span class="nx">value</span><span class="o">=</span><span class="s1">&#39;t*(2-t)&#39;</span><span class="o">&gt;</span><span class="nx">easeOutQuad</span><span class="o">&lt;</span><span class="err">/option&gt;</span>
+</span><span class='line'>    <span class="o">&lt;</span><span class="nx">option</span> <span class="nx">value</span><span class="o">=</span><span class="s1">&#39;t&lt;.5 ? 2*t*t : -1+(4-2*t)*t&#39;</span><span class="o">&gt;</span><span class="nx">easeInOutQuad</span><span class="o">&lt;</span><span class="err">/option&gt;</span>
+</span><span class='line'>    <span class="o">&lt;</span><span class="nx">option</span> <span class="nx">value</span><span class="o">=</span><span class="s1">&#39;t&lt;.5 ? 8*t*t*t*t : 1-8*(--t)*t*t*t&#39;</span><span class="o">&gt;</span><span class="nx">easeInOutQuart</span><span class="o">&lt;</span><span class="err">/option&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/select&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+These equations are derived from the jQuery <a href="http://gsgd.co.uk/sandbox/jquery/easing/jquery.easing.1.3.js">source code</a> and the javascript evals each of them as they are selected by the user.</p>
+
+<div style="text-align:center">
+  <img src="http://i.imgur.com/2tPtLgt.jpg"/><br/>
+  <p style="font-size:20px"><strong>Don&#8217;t forget to thank Jimmy if you enjoyed this as much as I did!</strong></p>
+</div>
+
+
 
 ]]></content>
   </entry>
