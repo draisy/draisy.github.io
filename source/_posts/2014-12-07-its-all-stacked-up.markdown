@@ -79,7 +79,7 @@ class StackWithTwoQueues
     Queue<Integer> queue1;
     Queue<Integer> queue2;
  
-    public StackWithQueue()
+    public StackWithTwoQueues()
     {
         queue1 = new LinkedList<Integer>();
         queue2 = new LinkedList<Integer>();
