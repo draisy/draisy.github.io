@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Java,&nbsp;data&nbsp;structures,&nbsp;stacks,&nbsp;queues | D is for Development]]></title>
+  <link href="http://draisy.github.io/blog/categories/java-data-structures-stacks-queues/atom.xml" rel="self"/>
+  <link href="http://draisy.github.io/"/>
+  <updated>2014-12-07T09:45:34-05:00</updated>
+  <id>http://draisy.github.io/</id>
+  <author>
+    <name><![CDATA[Draisy]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[It's All Stacked Up]]></title>
+    <link href="http://draisy.github.io/blog/2014/12/07/its-all-stacked-up/"/>
+    <updated>2014-12-07T01:47:09-05:00</updated>
+    <id>http://draisy.github.io/blog/2014/12/07/its-all-stacked-up</id>
+    <content type="html"><![CDATA[<p>How to implement a stack based using two queues?</p>
+
+<!--more-->
+
+
+<p>This question was posed to me on Friday, and while I didn&rsquo;t get it right on my first try, it remained stuck in my head till now, when I finally talked myself through it and resolved the problem.</p>
+
+<p>As a quick refresher, the stack is LIFO (last in first out) data structure and a queue is FIFO (first in first out). That translates into the meaning the last element added to the stack is the first one to be removed, and the first element added to the queue is the first to be removed.</p>
+
+<div style="text-align:center">
+  <img src="http://i.imgur.com/sr4Nnlc.jpg"/>
+</div>
+
+
+<p>So how can you actually implement the stack structure while using two queues? My first thought was to simply push each element into both the stack and the first queue at the same time. Then when we call pop, the program dequeue the n-1 elements from queue1 into queue2, and we would be left with just one final element on queue1 which you could pop to achieve the same result like calling pop on stack.</p>
+
+<p>OK&hellip;maybe? But then I thought of the follow up: what if you call pop twice in a row? How do you access the n-2nd element as well? You would essentially have one empty queue and another still in FIFO order at that point in time. You would either need to tell your program that queue1 is now queue2 and vice versa (so that we would pop from the filled queue and push into the empty one), or immediately return the elements from queue2 to queue1 after the operation.</p>
+
+<p>Or, instead of the overhead in the pop method, we could go ahead and make the push method more costly. So instead of simply pushing all elements immediately into queue1, we push the new element into queue2, pop all the existing elements from queue1 to queue2, and then move all the elements (or swap pointers) back to queue1, so that the newly pushed item is at the front to be popped first.</p>
+
+<p>Here is some pseudocode of my thought process:
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="o">/&lt;</span><span class="n">em</span><span class="o">&gt;</span> <span class="n">Method</span> <span class="mi">1</span><span class="o">:</span> <span class="o">(</span><span class="n">push</span> <span class="n">heavy</span><span class="o">)</span> <span class="o">&lt;/</span><span class="n">em</span><span class="o">&gt;/&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">For</span> <span class="nl">push:</span>
+</span><span class='line'>  <span class="mi">1</span><span class="o">)</span> <span class="n">Enqueue</span> <span class="k">new</span> <span class="n">element</span> <span class="n">to</span> <span class="n">queue2</span>
+</span><span class='line'>  <span class="mi">2</span><span class="o">)</span> <span class="n">Dequeue</span> <span class="n">existing</span> <span class="n">elements</span> <span class="n">from</span> <span class="n">queue1</span> <span class="n">and</span> <span class="n">enqueue</span> <span class="n">to</span> <span class="n">queue2</span><span class="o">.</span>
+</span><span class='line'>  <span class="mi">3</span><span class="o">)</span> <span class="n">Move</span> <span class="n">all</span> <span class="n">elements</span> <span class="n">from</span> <span class="n">queue2</span> <span class="n">back</span> <span class="n">to</span> <span class="n">queue1</span> <span class="n">or</span> <span class="n">swap</span> <span class="n">pointers</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">And</span> <span class="n">now</span> <span class="nl">pop:</span>
+</span><span class='line'>  <span class="mi">1</span><span class="o">)</span> <span class="n">Dequeue</span> <span class="n">an</span> <span class="n">item</span> <span class="n">from</span> <span class="n">queue1</span> <span class="n">and</span> <span class="k">return</span> <span class="n">it</span><span class="o">.&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;/&lt;</span><span class="n">em</span><span class="o">&gt;</span> <span class="n">Method</span> <span class="mi">2</span><span class="o">:</span> <span class="o">(</span><span class="n">pop</span> <span class="n">heavy</span><span class="o">)</span> <span class="o">&lt;/</span><span class="n">em</span><span class="o">&gt;/&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">For</span> <span class="nl">push:</span>
+</span><span class='line'><span class="mi">1</span><span class="o">)</span> <span class="n">Enqueue</span> <span class="k">new</span> <span class="n">element</span> <span class="n">to</span> <span class="n">queue1</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">For</span> <span class="nl">pop:</span>
+</span><span class='line'>  <span class="mi">1</span><span class="o">)</span> <span class="n">Dequeue</span> <span class="n">n</span><span class="o">-</span><span class="mi">1</span> <span class="n">elements</span> <span class="n">from</span> <span class="n">queue1</span> <span class="n">to</span> <span class="n">queue2</span><span class="o">.</span>
+</span><span class='line'>  <span class="mi">2</span><span class="o">)</span> <span class="n">Dequeue</span> <span class="n">the</span> <span class="n">last</span> <span class="n">item</span> <span class="n">of</span> <span class="n">queue1</span><span class="o">,</span> <span class="n">and</span> <span class="n">save</span> <span class="n">the</span> <span class="n">value</span>
+</span><span class='line'>  <span class="mi">3</span><span class="o">)</span> <span class="n">Return</span> <span class="n">all</span> <span class="n">elements</span> <span class="n">from</span> <span class="n">queue2</span> <span class="n">to</span> <span class="n">queue1</span> <span class="n">or</span> <span class="n">swap</span> <span class="n">names</span>
+</span><span class='line'>  <span class="mi">4</span><span class="o">)</span> <span class="n">Return</span> <span class="n">value</span> <span class="n">stored</span> <span class="n">in</span> <span class="n">step</span> <span class="mi">2</span><span class="o">.&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span>
+</span><span class='line'><span class="n">Assuming</span> <span class="n">we</span><span class="err">&#39;</span><span class="n">d</span> <span class="n">also</span> <span class="n">want</span> <span class="n">to</span> <span class="n">implement</span> <span class="n">a</span> <span class="err">```</span><span class="n">peek</span><span class="o">()</span><span class="err">```</span> <span class="n">method</span><span class="o">,</span> <span class="n">I</span> <span class="n">proceeded</span> <span class="n">with</span> <span class="n">method1</span> <span class="n">and</span> <span class="n">left</span> <span class="n">the</span> <span class="n">push</span> <span class="n">function</span> <span class="n">to</span> <span class="n">be</span> <span class="n">the</span> <span class="n">costly</span> <span class="n">one</span><span class="o">.</span> <span class="n">My</span> <span class="n">next</span> <span class="n">step</span> <span class="n">was</span> <span class="n">to</span> <span class="n">refine</span> <span class="n">the</span> <span class="n">functionality</span> <span class="n">of</span> <span class="err">```</span><span class="n">push</span><span class="o">(</span><span class="kt">int</span><span class="o">)</span><span class="err">```</span><span class="o">.</span> <span class="n">I</span> <span class="n">chose</span> <span class="n">to</span> <span class="n">proceed</span> <span class="n">with</span> <span class="n">the</span> <span class="n">additional</span> <span class="n">step</span> <span class="n">of</span> <span class="n">moving</span> <span class="n">elements</span> <span class="n">back</span> <span class="n">to</span> <span class="n">previous</span> <span class="n">queue</span> <span class="n">after</span> <span class="n">an</span> <span class="n">operation</span> <span class="n">as</span> <span class="n">opposed</span> <span class="n">to</span> <span class="n">swapping</span> <span class="n">pointers</span><span class="o">,</span> <span class="n">because</span> <span class="n">I</span> <span class="n">was</span> <span class="n">thinking</span> <span class="n">that</span> <span class="n">creating</span> <span class="n">a</span> <span class="n">temp</span> <span class="n">queue</span> <span class="n">as</span> <span class="n">placeholder</span> <span class="n">might</span> <span class="n">possibly</span> <span class="n">count</span> <span class="n">towards</span> <span class="n">a</span> <span class="n">third</span> <span class="n">queue</span> <span class="n">and</span> <span class="n">thus</span> <span class="k">break</span> <span class="n">the</span> <span class="n">constraints</span> <span class="n">of</span> <span class="k">this</span> <span class="n">problem</span><span class="o">.</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">So</span><span class="o">,</span> <span class="n">we</span> <span class="n">can</span> <span class="n">go</span> <span class="n">ahead</span> <span class="n">and</span> <span class="n">push</span> <span class="n">into</span> <span class="n">queue1</span> <span class="n">directly</span> <span class="n">when</span> <span class="n">it</span> <span class="n">is</span> <span class="n">empty</span><span class="o">,</span> <span class="n">but</span> <span class="n">otherwise</span><span class="o">,</span> <span class="n">we</span> <span class="n">will</span> <span class="n">first</span> <span class="n">dequeue</span> <span class="n">all</span> <span class="n">existing</span> <span class="n">elements</span> <span class="n">from</span> <span class="n">queue1</span> <span class="n">to</span> <span class="n">queue2</span><span class="o">,</span> <span class="n">add</span> <span class="n">the</span> <span class="k">new</span> <span class="n">element</span> <span class="n">to</span> <span class="n">queue1</span> <span class="n">and</span> <span class="n">then</span> <span class="k">return</span> <span class="n">the</span> <span class="n">previous</span> <span class="n">elements</span> <span class="n">from</span> <span class="n">queue2</span> <span class="n">to</span> <span class="n">queue1</span><span class="o">.</span> <span class="n">At</span> <span class="k">this</span> <span class="n">point</span><span class="o">,</span> <span class="n">we</span> <span class="n">should</span> <span class="n">always</span> <span class="n">be</span> <span class="n">able</span> <span class="n">to</span> <span class="n">pop</span> <span class="n">from</span> <span class="n">queue1</span><span class="o">.</span> <span class="n">Here</span> <span class="n">is</span> <span class="n">some</span> <span class="n">further</span> <span class="n">pseudocode</span> <span class="k">for</span> <span class="k">this</span> <span class="n">version</span> <span class="n">of</span> <span class="nl">push:</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">Create</span> <span class="n">two</span> <span class="n">queues</span>
+</span><span class='line'><span class="n">For</span> <span class="n">the</span> <span class="n">push</span> <span class="nl">method:</span>
+</span><span class='line'>    <span class="n">If</span> <span class="n">the</span> <span class="n">size</span> <span class="n">of</span> <span class="n">queue1</span> <span class="o">==</span> <span class="mi">0</span> <span class="n">then</span>
+</span><span class='line'>        <span class="n">we</span> <span class="n">enqueue</span> <span class="k">new</span> <span class="n">value</span> <span class="n">into</span> <span class="n">queue1</span>
+</span><span class='line'>    <span class="n">Else</span>
+</span><span class='line'>        <span class="n">we</span> <span class="n">dequeue</span> <span class="n">all</span> <span class="n">elements</span> <span class="n">from</span> <span class="n">queue1</span> <span class="n">to</span> <span class="n">queue2</span>
+</span><span class='line'>        <span class="n">enqueue</span> <span class="k">new</span> <span class="n">value</span> <span class="n">into</span> <span class="n">queue1</span>
+</span><span class='line'>        <span class="n">dequeue</span> <span class="n">all</span> <span class="n">previous</span> <span class="n">elements</span> <span class="n">from</span> <span class="n">queue2</span> <span class="n">to</span> <span class="n">queue1</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">For</span> <span class="n">the</span> <span class="n">pop</span> <span class="nl">method:</span>
+</span><span class='line'>    <span class="n">If</span> <span class="n">the</span> <span class="n">size</span> <span class="n">of</span> <span class="n">queue1</span> <span class="o">=</span> <span class="mi">0</span> <span class="n">then</span>
+</span><span class='line'>       <span class="n">we</span> <span class="k">throw</span> <span class="o">&amp;</span><span class="n">lsquo</span><span class="o">;</span><span class="n">underflow</span><span class="o">&amp;</span><span class="n">rsquo</span><span class="o">;</span> <span class="n">error</span>
+</span><span class='line'>    <span class="n">Else</span>
+</span><span class='line'>        <span class="n">we</span> <span class="k">return</span> <span class="n">front</span> <span class="n">element</span> <span class="n">of</span> <span class="n">queue1</span>
+</span></code></pre></td></tr></table></div></figure>
+And finally, here&rsquo;s a java implementation of this solution:</p>
+
+<pre><code class="java">class StackWithTwoQueues
+{
+    Queue&lt;Integer&gt; queue1 ;
+    Queue&lt;Integer&gt; queue2 ;
+
+    public StackWithQueue()
+    {
+        queue1 = new LinkedList&lt;Integer&gt;();
+        queue2 = new LinkedList&lt;Integer&gt;();
+    }    
+
+    public void push(int value)
+    {
+
+        if (queue1.size() == 0)
+            queue1.enqueue(value);
+        else
+            int length = queue1.size();
+            for (int i = 0; i &lt; length; i++)
+                queue2.enqueue(queue1.dequeue());                
+
+            queue1.add(value);        
+
+            for (int i = 0; i &lt; length; i++)
+                queue1.enqueue(queue2.remove());
+        }
+    }
+
+    public int pop()
+    {
+        if (queue1.size() == 0)
+            throw new NoSuchElementException("Underflow Exception");        
+        return queue1.remove();
+    }
+}          
+</code></pre>
+
+<p>In our case, queue2 will always be null at the end of any operation, and queue1 will always contain the correct stack order of elements.</p>
+]]></content>
+  </entry>
+  
+</feed>
