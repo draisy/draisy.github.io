@@ -17,7 +17,7 @@ As a quick refresher, the stack is LIFO (last in first out) data structure and a
   <img src="http://i.imgur.com/sr4Nnlc.jpg"/>
 </div>
 
-So how can you actually implement the stack structure while using two queues? My first thought was to simply push each element into both the stack and the first queue at the same time. Then when we call pop, the program dequeue the n-1 elements from queue1 into queue2, and we would be left with just one final element on queue1 which you could pop to achieve the same result like calling pop on stack. 
+So how can you actually implement the stack structure while using two queues? My first thought was to simply push each element into both the stack and the first queue at the same time. Then when we call pop, the program will dequeue the n-1 elements from queue1 into queue2, and we would be left with just one final element on queue1 which you could pop to achieve the same result like calling pop on stack. 
 
 OK...maybe? But then I thought of the follow up: what if you call pop twice in a row? How do you access the n-2nd element as well? You would essentially have one empty queue and another still in FIFO order at that point in time. You would either need to tell your program that queue1 is now queue2 and vice versa (so that we would pop from the filled queue and push into the empty one), or immediately return the elements from queue2 to queue1 after the operation. 
 
@@ -48,7 +48,7 @@ For pop:
 
 ```
 
-Assuming we'd also want to implement a ```peek()``` method, I proceeded with method1 and left the push function to be the costly one. My next step was to refine the functionality of ```push(int)```. I chose to proceed with the additional step of moving elements back to previous queue after an operation as opposed to swapping pointers, because I was thinking that creating a temp queue as placeholder might possibly count towards a third queue and thus break the constraints of this problem. 
+Assuming we'd also want to implement a ```peek()``` method, I proceeded with method1 and left the push function to be the costly one. My next step was to refine the functionality of ```push(int)```. I chose to proceed with the additional step of moving elements back to previous queue after an operation as opposed to swapping pointers, because I was thinking that creating a temp queue as placeholder to swap by reference might possibly count towards a third queue and thus break the constraints of this problem.
 
 So, we can go ahead and push into queue1 directly when it is empty, but otherwise, we will first dequeue all existing elements from queue1 to queue2, add the new element to queue1 and then return the previous elements from queue2 to queue1. At this point, we should always be able to pop from queue1. Here is some further pseudocode for this version of push:
 
@@ -76,8 +76,8 @@ And finally, here's a java implementation of this solution:
 ```java
 class StackWithTwoQueues
 {
-    Queue<Integer> queue1 ;
-    Queue<Integer> queue2 ;
+    Queue<Integer> queue1;
+    Queue<Integer> queue2;
  
     public StackWithQueue()
     {
