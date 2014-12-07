@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Java,&nbsp;data&nbsp;structures,&nbsp;stacks,&nbsp;queues | D is for Development]]></title>
   <link href="http://draisy.github.io/blog/categories/java-data-structures-stacks-queues/atom.xml" rel="self"/>
   <link href="http://draisy.github.io/"/>
-  <updated>2014-12-07T09:51:23-05:00</updated>
+  <updated>2014-12-07T09:52:30-05:00</updated>
   <id>http://draisy.github.io/</id>
   <author>
     <name><![CDATA[Draisy]]></name>
@@ -129,7 +129,7 @@ And finally, here&rsquo;s a java implementation of this solution:</p>
     Queue&lt;Integer&gt; queue1;
     Queue&lt;Integer&gt; queue2;
 
-    public StackWithQueue()
+    public StackWithTwoQueues()
     {
         queue1 = new LinkedList&lt;Integer&gt;();
         queue2 = new LinkedList&lt;Integer&gt;();

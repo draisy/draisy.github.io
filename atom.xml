@@ -4,7 +4,7 @@
   <title><![CDATA[D is for Development]]></title>
   <link href="http://draisy.github.io/atom.xml" rel="self"/>
   <link href="http://draisy.github.io/"/>
-  <updated>2014-12-07T09:51:23-05:00</updated>
+  <updated>2014-12-07T09:52:30-05:00</updated>
   <id>http://draisy.github.io/</id>
   <author>
     <name><![CDATA[Draisy]]></name>
@@ -160,7 +160,7 @@
 </span><span class='line'>    <span class="n">Queue</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">queue1</span><span class="o">;</span>
 </span><span class='line'>    <span class="n">Queue</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">queue2</span><span class="o">;</span>
 </span><span class='line'>
-</span><span class='line'>    <span class="kd">public</span> <span class="nf">StackWithQueue</span><span class="o">()</span>
+</span><span class='line'>    <span class="kd">public</span> <span class="nf">StackWithTwoQueues</span><span class="o">()</span>
 </span><span class='line'>    <span class="o">{</span>
 </span><span class='line'>        <span class="n">queue1</span> <span class="o">=</span> <span class="k">new</span> <span class="n">LinkedList</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;();</span>
 </span><span class='line'>        <span class="n">queue2</span> <span class="o">=</span> <span class="k">new</span> <span class="n">LinkedList</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;();</span>
